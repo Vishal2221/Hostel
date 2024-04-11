@@ -1,0 +1,24 @@
+{
+  "student": [
+    {
+      "id": "8939",
+      "Name": "Dikshit Dhar",
+      "roomNumber": "55",
+      "phoneNumber": "+916005880541",
+      "rollNumber": "4885",
+      "semester": "8"
+    },
+    {
+      "id": "WARDEN",
+      "Password": "12345qwerty"
+    },
+    {
+      "id": "2227",
+      "Name": "admin",
+      "roomNumber": "44",
+      "phoneNumber": "6005880541",
+      "rollNumber": "4845",
+      "semester": "8"
+    }
+  ]
+}
