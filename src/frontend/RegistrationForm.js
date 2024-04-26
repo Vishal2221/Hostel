@@ -25,7 +25,7 @@ function RegistrationForm() {
     
     const auth = localStorage.getItem('user')
     if(auth){
-      Navigate('/')
+      Navigate('/StudentPage')
     }
    })
 
@@ -48,7 +48,7 @@ function RegistrationForm() {
     console.log(result);
     localStorage.setItem("user",JSON.stringify(result))
     
-      Navigate('/home')
+      Navigate('/StudentPage')
     
   };
 
