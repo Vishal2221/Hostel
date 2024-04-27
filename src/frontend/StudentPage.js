@@ -54,9 +54,7 @@ function StudentPage() {
               <li>
                 <Link to="/Mess"> Mess</Link>
               </li>
-              <li>
-                <Link to="/Hostelirs"> Hosteliers</Link>
-              </li>
+             
             </ul>
           </div>
          

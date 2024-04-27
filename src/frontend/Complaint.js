@@ -1,10 +1,20 @@
 
 import Footer from './Footer';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 
 function Complaint() {
+    const Navigate = useNavigate()
+
+    onsubmit=()=>{
+      Navigate('/StudentPage')
+
+    }
+
+   
 
     return (
+       
 
         <>
             <Navbar />
@@ -15,7 +25,7 @@ function Complaint() {
                         <option value="complaint">Complaint</option>
                     </select>
                     <textarea class="w-full h-32 p-2 border rounded-md resize-y" placeholder="Write here"></textarea>
-                    <button class="w-full py-2 px-4 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600" type="submit">Submit</button>
+                    <button class="w-full py-2 px-4 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"  type="submit">Submit</button>
                 </form>
                
             </div>

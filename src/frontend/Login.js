@@ -24,8 +24,10 @@ function Login() {
     console.log(result)
     if(result.username){
       localStorage.setItem("user",JSON.stringify(result))
-      navigate('/home')
+      navigate('/Warden')
 
+    }else {
+      navigate('/home')
     }
 
     
