@@ -16,6 +16,8 @@ function Update() {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [rollNumber, setRollNumber] = useState("");
     const [semester, setsemester] = useState("");
+    const [Block, setBlock] = useState("");
+    const [email, setEmail] = useState("");
     const Navigate = useNavigate()
     const params = useParams()
 
@@ -34,6 +36,8 @@ function Update() {
 
         setName(result.Name)
         setRoomNumber(result.roomNumber)
+        setBlock(result.Block)
+        setEmail(result.email)
         setPhoneNumber(result.phoneNumber)
         setRollNumber(result.rollNumber)
         setsemester(result.semester)
@@ -48,7 +52,7 @@ function Update() {
     const updateUser = async () => {
         let result = fetch(`http://localhost:5800/users/${params.id}`, {
             method: 'Put',
-            body: JSON.stringify({ Name, roomNumber, phoneNumber, rollNumber, semester }),
+            body: JSON.stringify({ Name, roomNumber, email,Block,phoneNumber, rollNumber, semester }),
             headers: {
                 'Content-Type': "application/json"
             }
@@ -62,7 +66,7 @@ return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="max-w-md w-full p-6 bg-white shadow-lg rounded-lg">
 
-            <h1 className="text-2xl font-bold text-center text-gray-800">
+            <h1 className="text-2xl font-bold text-center text-blue-400">
                 Updation Form
             </h1>
             <form className="mt-4 space-y-4">
@@ -92,11 +96,28 @@ return (
                         Room Number
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         id="roomNumber"
                         name="roomNumber"
                         value={roomNumber}
                         onChange={(e) => setRoomNumber(e.target.value)}
+                        required
+                        className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <label
+                        htmlFor="Block"
+                        className="text-sm font-medium text-gray-600"
+                    >
+                         Block
+                    </label>
+                    <input
+                        type="text"
+                        id="Block"
+                        name="Block"
+                        value={Block}
+                        onChange={(e) => setBlock(e.target.value)}
                         required
                         className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
@@ -157,7 +178,7 @@ return (
                     <button
                         type="button"
                         onClick={updateUser}
-                        className="w-32 p-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-32 p-2 bg-gray-500 hover:bg-blue-400 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
                         Update
                     </button>

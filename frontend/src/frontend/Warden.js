@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import React from 'react';
-import ProgressBar from "./ProgressBar";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";

@@ -28,7 +28,9 @@ app.post("/login", async (req, resp) => {
 });
 
 app.get("/getData", async (req, resp) => {
-  let user = await User.find({ rollNumber: { $exists: true } });
+  let user = await User.find({ rollNumber: { $exists: true } }).sort({
+    roomNumber: 1,
+  });
   if (user.length > 0) {
     resp.send(user);
   } else {
@@ -41,24 +43,23 @@ app.delete("/users/:id", async (req, resp) => {
   resp.send(result);
 });
 
-app.get("/users/:id", async(req, resp)=> {
-  let result = await User.findOne({_id: req.params.id})
+app.get("/users/:id", async (req, resp) => {
+  let result = await User.findOne({ _id: req.params.id });
   if (result) {
-    resp.send(result)
-  }else{
-    resp.send({result: "No record Found"})
+    resp.send(result);
+  } else {
+    resp.send({ result: "No record Found" });
   }
-  
-})
+});
 
-app.put("/users/:id", async(req,resp)=> {
+app.put("/users/:id", async (req, resp) => {
   let result = await User.updateOne(
-    {_id:req.params.id},
+    { _id: req.params.id },
     {
-      $set: req.body
+      $set: req.body,
     }
-  )
-  resp.send(result)
-})
+  );
+  resp.send(result);
+});
 
 app.listen(5800);

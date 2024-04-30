@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.db62923b.css",
+    "main.js": "/static/js/main.dcaa7c64.js",
+    "static/js/453.bea66239.chunk.js": "/static/js/453.bea66239.chunk.js",
+    "static/media/hostel1.jpg": "/static/media/hostel1.37651550e2ca0f9c818b.jpg",
+    "index.html": "/index.html",
+    "main.db62923b.css.map": "/static/css/main.db62923b.css.map",
+    "main.dcaa7c64.js.map": "/static/js/main.dcaa7c64.js.map",
+    "453.bea66239.chunk.js.map": "/static/js/453.bea66239.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db62923b.css",
+    "static/js/main.dcaa7c64.js"
+  ]
+}

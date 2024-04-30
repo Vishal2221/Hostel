@@ -15,9 +15,9 @@ function Navbar() {
 
  
   return (
-    <div className="bg-white  text-grey-800 p-4 flex  shadow-md">
+    <div className="bg-white  text-grey-800 p-4 flex shadow-md">
       <div className="logo  fixed">
-        <Link to="/Login">
+        <Link to="/home">
           <img
             className="float-left max-h-20"
             src="LOGO_50135-removebg-preview.png"
@@ -31,11 +31,9 @@ function Navbar() {
           <h1>Boys Hostel GCET Jammu</h1>
         </div>
 
-        <div className=" ">
+        <div className="flex justify-center ">
           <ul className="flex space-x-5 text-lg font-sans">
-            <li>
-              <Link to="/Home">Home</Link>
-            </li>
+           
             <li>
               <Link to="https://www.gcetjammu.org.in/"> College</Link>
             </li>

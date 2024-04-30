@@ -1,43 +1,55 @@
-
-import Footer from './Footer';
-import Navbar from './Navbar';
-import { useNavigate } from 'react-router-dom';
+import Footer from "./Footer";
+import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Complaint() {
-    const Navigate = useNavigate()
+  const [text, setText] = useState("");
+  const Navigate = useNavigate();
 
-    onsubmit=()=>{
+  onsubmit = () => {
       Navigate('/StudentPage')
+    
+    const sendText = async () => {
+      console.log(text);
+      let result = await fetch("http://localhost:5800/sendText", {
+        method: "post",
+        body: JSON.stringify({
+         
+          text,
+        }),
+        headers: { "content-Type": "application/json" },
+      });
+    };
+  };
 
-    }
+  return (
+    <>
+      <Navbar />
+      <div className="flex justify-center items-center h-screen">
+        <form className="bg-white p-6 rounded-lg shadow-md w-96">
+          <select className="w-full mb-4 p-2 border rounded-md">
+            <option value="service">Service</option>
+            <option value="complaint">Complaint</option>
+          </select>
+          <textarea
+            className="w-full h-32 p-2 border rounded-md resize-y"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Write here"
+          ></textarea>
+          <button
+            className="w-full py-2 px-4 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            type="submit"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
 
-   
-
-    return (
-       
-
-        <>
-            <Navbar />
-            <div class="flex justify-center items-center h-screen">
-                <form class="bg-white p-6 rounded-lg shadow-md w-96">
-                    <select class="w-full mb-4 p-2 border rounded-md">
-                        <option value="service">Service</option>
-                        <option value="complaint">Complaint</option>
-                    </select>
-                    <textarea class="w-full h-32 p-2 border rounded-md resize-y" placeholder="Write here"></textarea>
-                    <button class="w-full py-2 px-4 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"  type="submit">Submit</button>
-                </form>
-               
-            </div>
-
-
-            <Footer />
-
-        </>
-
-    )
-
-
+      <Footer />
+    </>
+  );
 }
 
-export default Complaint
+export default Complaint;

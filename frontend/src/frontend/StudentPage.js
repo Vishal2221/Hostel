@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGear } from "@fortawesome/free-solid-svg-icons";
+
 import { faEnvelopeCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 function StudentPage() {
   const [image, setImage] = useState(null);
+  
+
+
+
 
   const auth = localStorage.getItem("user");
 
@@ -39,7 +43,7 @@ function StudentPage() {
             alt=""
           />
         </div>
-        <div className="mx-auto">
+        <div className="mx-auto ">
           <div className="self-start text-5xl">
             <h1>Boys Hostel GCET Jammu</h1>
           </div>
@@ -59,7 +63,7 @@ function StudentPage() {
           </div>
          
         </div>
-        <div className="float-right px-2"><h4>{JSON.parse(auth).Name}</h4></div>
+        <div className="float-right px-2"><h4>{JSON.parse(auth).Name}</h4> <h5>{JSON.parse(auth).email}</h5></div>
       </div>
 
       <div className="flex container items-center h-screen  justify-evenly my-auto">
