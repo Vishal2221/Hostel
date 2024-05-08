@@ -42,7 +42,7 @@ export default function Mess() {
 
         <div className="flex justify-evenly">
           <form>
-            <input className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 mx-2 px-4 rounded inline-flex items-center h-10" type="file" accept="image/*" onChange={onInputChang}></input> 
+            <input className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 mx-2 px-4 rounded inline-flex items-center h-10" type="file" accept="image/*" onChange={onInputChang}></input>
 
             <button type="submit" className="bg-gray-300 hover:bg-blue-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center h-10">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-5 mx-1">

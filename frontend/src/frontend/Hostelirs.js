@@ -206,7 +206,7 @@ const Hostelirs = () => {
                   </td>
 
                   <td className="p-4 flex justify-evenly">
-                    <button onClick={() => deleteUser(student._id)}>
+                    <button type="submit" onClick={() => deleteUser(student._id)}>
                       Delete
                     </button>
 
