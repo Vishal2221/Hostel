@@ -12,4 +12,6 @@ const userSchema = new mongoose.Schema({
   image:String
 });
 
+
+
 module.exports = mongoose.model("users", userSchema);

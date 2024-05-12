@@ -7,27 +7,29 @@ function Complaint() {
   const [text, setText] = useState("");
   const Navigate = useNavigate();
 
-  onsubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5800/sendText", {
+      method: "post",
+      body: JSON.stringify({
+        text
+      }),
+      headers: { "content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      console.log("Text message sent successfully");
       Navigate('/StudentPage')
-    
-    const sendText = async () => {
-      console.log(text);
-      let result = await fetch("http://localhost:5800/sendText", {
-        method: "post",
-        body: JSON.stringify({
-         
-          text,
-        }),
-        headers: { "content-Type": "application/json" },
-      });
-    };
+    } else {
+      console.log("Error sending text message");
+    }
   };
 
   return (
     <>
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <form className="bg-white p-6 rounded-lg shadow-md w-96">
+        <form className="bg-white p-6 rounded-lg shadow-md w-96" onSubmit={handleSubmit}>
           <select className="w-full mb-4 p-2 border rounded-md">
             <option value="service">Service</option>
             <option value="complaint">Complaint</option>
