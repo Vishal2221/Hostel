@@ -152,7 +152,8 @@ const Hostelirs = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map((student) => (
+              
+              {students?.map((student) => (
                 <tr key={student._id}>
                   <td className="p-4">
                     <Typography
