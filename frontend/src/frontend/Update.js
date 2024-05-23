@@ -18,6 +18,7 @@ function Update() {
     const [semester, setsemester] = useState("");
     const [Block, setBlock] = useState("");
     const [email, setEmail] = useState("");
+    
     const Navigate = useNavigate()
     const params = useParams()
 
@@ -41,6 +42,7 @@ function Update() {
         setPhoneNumber(result.phoneNumber)
         setRollNumber(result.rollNumber)
         setsemester(result.semester)
+        
 
 
     }

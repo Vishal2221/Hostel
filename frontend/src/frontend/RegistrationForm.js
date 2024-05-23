@@ -14,15 +14,7 @@ function RegistrationForm() {
 
   const Navigate = useNavigate();
 
-  // useEffect(()=> {
-
-  //   const auth = localStorage.getItem('user')
-  //   if(auth){
-  //     Navigate('/StudentPage')
-  //   }
-  //  })
-
-  // Handle the form submission
+  
   const collectData = async () => {
     console.log(
       Name,

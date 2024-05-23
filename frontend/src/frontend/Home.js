@@ -11,7 +11,7 @@ function Home() {
     
     <Navbar/>
     <div className='' style={{ backgroundImage:`url(${image})` }}>
-        <div className=" p-40 flex container items-center h-screen  justify-evenly my-auto">
+        <div className=" flex container items-center h-screen  justify-evenly my-auto">
 
         <div className="h-65 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col items-center ">
                 <img className="h-48 w-48 rounded-full object-cover" src={image} alt="User Image" />
@@ -39,7 +39,7 @@ function Home() {
                 </div>
 
 
-                <div className="gaurds p-40 flex container items-center h-screen  justify-evenly my-auto">
+                <div className="gaurds  flex container items-center h-screen  justify-evenly ">
 
                 <div className="h-65 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col items-center ">
                 <img className="h-48 w-48 rounded-full object-cover" src={image} alt="User Image" />

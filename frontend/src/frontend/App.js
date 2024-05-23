@@ -4,14 +4,18 @@ import RegistrationForm from "./RegistrationForm";
 import StudentPage from "./StudentPage";
 import Complaint from "./Complaint";
 import Hostelirs from "./Hostelirs";
-import UploadButton from "./UploadButton"
+import UploadButton from "./UploadButton";
 import Messages from "./Messages";
 import Home from "./Home";
-
+import NoticeBoard from "./NoticeBoard";
 import Update from "./Update";
-
+import NewLogin from "./NewLogin";
+import NotAllowed from "./NotAllowed";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Warden from "./Warden";
+import { useState } from "react";
+import { Navigate } from 'react-router-dom';
+
 
 function App() {
   const User_Type = {
@@ -20,122 +24,136 @@ function App() {
     admin: "ADMIN",
   };
 
+  const [CurrentUser, setCurrentUser] = useState(null);
+    
+
   function publicElement({ children }) {
     return <>{children}</>;
   }
-
+  
   function AdminElement({ children }) {
-    if (Current_User === User_Type.admin) {
+    if (CurrentUser === 'admin') {
       return <>{children}</>;
     }
+    return <Navigate to="/NotAllowed" replace />;
   }
-
+  
   function StudentElement({ children }) {
-    if (Current_User === User_Type.student) {
+    if (CurrentUser === 'student') {
       return <>{children}</>;
     }
+    return <Navigate to="/NotAllowed" replace />;
   }
-  var Current_User = User_Type.admin;
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route
-            path="/home"
-            element={
-              <publicElement>
-                <Home />
-              </publicElement>
-            }
-          ></Route>
-          <Route
-            path="/Warden"
-            element={
-              <AdminElement>
-                <Warden />
-              </AdminElement>
-            }
-          />
-          <Route
-            path="/UploadButton"
-            element={
-              <AdminElement>
-                <UploadButton />
-              </AdminElement>
-            }
-          />
-          <Route
-            path="/Hostelirs"
-            element={
-              <AdminElement>
-                <Hostelirs />
-              </AdminElement>
-            }
-          />
-          <Route
-            path="/Update/:id"
-            element={
-              <AdminElement>
-                <Update />
-              </AdminElement>
-            }
-          />
-          <Route
-            path="/Messages"
-            element={
-              <AdminElement>
-                <Messages />
-              </AdminElement>
-            }
-          />
-          <Route
-            path="/RegistrationForm"
-            element={
-              <AdminElement>
-                <RegistrationForm />
-              </AdminElement>
-            }
-          />
 
-          <Route
-            path="/complaint"
-            element={
-              <StudentElement>
-                <Complaint />
-              </StudentElement>
-            }
-          />
+      var Current_User=User_Type.public
 
-          <Route
-            path="/StudentPage"
-            element={
-              <StudentElement>
-                <StudentPage />
-              </StudentElement>
-            }
-          />
-        </Routes>
-      </Router>
+      return (
+        <>
+          <Router>
+            <Routes>
+              <Route
+                path="/home"
+                element={
+                  <publicElement>
+                    <Home />
+                  </publicElement>
+                }
+              ></Route>
 
-      {/* <Router>
-        <Routes>
-           <Route element={<PrivateComponent />}>
-            <Route path="/Warden" element={<Warden />} />
-            <Route path="/StudentPage" element={<StudentPage />} />
-            <Route path="/Complaint" element={<Complaint />} />
-            <Route path="/Messages" element={<Messages />} />
-            <Route path="/Hostelirs" element={<Hostelirs />} />
-            <Route path="/Mess" element={<Mess />} />
-            <Route path="/Update/:id" element={<Update />} />
-          </Route>
-          <Route path="/" element={<Home />} />
-          <Route path="/RegistrationForm" element={<RegistrationForm />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
-        </Routes>
-      </Router> */}
-    </>
-  );
+              <Route
+                path="/NewLogin"
+                element={
+                  <publicElement>
+                    <NewLogin  setCurrentUser={setCurrentUser}/>
+                  </publicElement>
+                }
+              ></Route>
+              <Route
+                path="/NotAllowed"
+                element={
+                  <publicElement>
+                    <NotAllowed/>
+                  </publicElement>
+                }
+              ></Route>
+              <Route
+                path="/Warden"
+                element={
+                  <AdminElement>
+                    <Warden />
+                  </AdminElement>
+                }
+              />
+              <Route
+                path="/NoticeBoard"
+                element={
+                  <AdminElement>
+                    <NoticeBoard />
+                  </AdminElement>
+                }
+              />
+              <Route
+                path="/UploadButton"
+                element={
+                  <AdminElement>
+                    <UploadButton />
+                  </AdminElement>
+                }
+              />
+              <Route
+                path="/Hostelirs"
+                element={
+                  <AdminElement>
+                    <Hostelirs />
+                  </AdminElement>
+                }
+              />
+              <Route
+                path="/Update/:id"
+                element={
+                  <AdminElement>
+                    <Update />
+                  </AdminElement>
+                }
+              />
+              <Route
+                path="/Messages"
+                element={
+                  <AdminElement>
+                    <Messages />
+                  </AdminElement>
+                }
+              />
+              <Route
+                path="/RegistrationForm"
+                element={
+                  <AdminElement>
+                    <RegistrationForm />
+                  </AdminElement>
+                }
+              />
+
+              <Route
+                path="/Complaint"
+                element={
+                  <StudentElement>
+                    <Complaint />
+                  </StudentElement>
+                }
+              />
+
+              <Route
+                path="/StudentPage"
+                element={
+                  <StudentElement>
+                    <StudentPage />
+                  </StudentElement>
+                }
+              />
+            </Routes>
+          </Router>
+        </>
+      );
+    
 }
-
 export default App;

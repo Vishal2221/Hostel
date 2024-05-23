@@ -40,7 +40,7 @@ function Navbar() {
                   Log out
                 </Link>
               ) : (
-                <Link to="/Login">Log in</Link>
+                <Link to="/NewLogin">Log in</Link>
               )}
             </li>
           </ul>
