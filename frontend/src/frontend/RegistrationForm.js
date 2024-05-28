@@ -9,7 +9,7 @@ function RegistrationForm() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [rollNumber, setRollNumber] = useState("");
   const [semester, setsemester] = useState("");
-  const [email, setEmail] = useState("");
+  
   const [Block, setBlock] = useState("");
 
   const Navigate = useNavigate();
@@ -18,7 +18,7 @@ function RegistrationForm() {
   const collectData = async () => {
     console.log(
       Name,
-      email,
+     
       roomNumber,
       Block,
       phoneNumber,
@@ -29,7 +29,7 @@ function RegistrationForm() {
       method: "post",
       body: JSON.stringify({
         Name,
-        email,
+        
         roomNumber,
         Block,
         phoneNumber,
@@ -92,23 +92,7 @@ function RegistrationForm() {
               />
             </div>
 
-            <div className="flex flex-col">
-              <label
-                htmlFor="email"
-                className="text-sm font-medium text-gray-600"
-              >
-                E-mail
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
+           
 
             <div className="flex flex-col">
               <label

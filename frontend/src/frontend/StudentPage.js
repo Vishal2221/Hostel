@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { stringify, parse } from "flatted";
 import { useParams } from "react-router-dom";
 import { faEnvelopeCircleCheck } from "@fortawesome/free-solid-svg-icons";
 

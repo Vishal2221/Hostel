@@ -8,15 +8,11 @@ const mongoose = require("mongoose");
 app.use(express.json());
 app.use(cors());
 
-
-
-
 // Create a new user instance with the request body data
 app.post("/register", async (req, resp) => {
   let user = new User(req.body);
-  user.Userpassword = req.body.phoneNumber; 
+  user.Userpassword = req.body.phoneNumber;
   let result = await user.save();
-
 
   resp.send(result);
 });
@@ -35,8 +31,6 @@ app.post("/login", async (req, resp) => {
   }
 });
 
-
-
 //verify phoneNumber
 app.post("/verifyNumber", async (req, resp) => {
   if (req.body.rollNumber && req.body.Userpassword) {
@@ -50,9 +44,6 @@ app.post("/verifyNumber", async (req, resp) => {
     resp.send("no user found");
   }
 });
-
-
-
 
 //show student data
 app.get("/getData", async (req, resp) => {
@@ -93,7 +84,6 @@ app.put("/users/:id", async (req, resp) => {
   resp.send(result);
 });
 
-
 //update Userpassword
 app.put("/users/:id/change-password", async (req, res) => {
   if (!req.body.newPassword) {
@@ -117,6 +107,31 @@ app.put("/users/:id/change-password", async (req, res) => {
   }
 });
 
+//send message
+
+app.put("/deleteMessage/:id", async (req, res) => {
+  
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).send("User not found.");
+    }
+
+    // Update the password
+    user.Text = "";
+    const result = await user.save();
+
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
+
+
+
 
 ////////////////////////////
 
@@ -128,8 +143,6 @@ app.get("/", async (req, res) => {
   res.send("Success!!!!!!");
 });
 
-
-
 //////////////////////////////////////////////////////////////
 
 const multer = require("multer");
@@ -140,7 +153,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
-    cb(null, "MESSMENU" +uniqueSuffix + file.originalname);
+    cb(null, "MESSMENU" + uniqueSuffix + file.originalname);
   },
 });
 
@@ -158,9 +171,6 @@ app.post("/upload-image", upload.single("image"), async (req, res) => {
   }
 });
 
-
-
-
 app.get("/get-image", async (req, res) => {
   try {
     Images.find({}).then((data) => {
@@ -171,26 +181,32 @@ app.get("/get-image", async (req, res) => {
   }
 });
 
-const fs = require('fs');
+const fs = require("fs");
 
-const path = require('path');
+const path = require("path");
 
 app.delete("/deleteImage/:id", async (req, res) => {
   try {
     const image = await Images.findOne({ _id: req.params.id });
     if (image) {
-      const filePath = path.join(__dirname, '../frontend/src/frontend/images/', image.image);
+      const filePath = path.join(
+        __dirname,
+        "../frontend/src/frontend/images/",
+        image.image
+      );
       fs.unlinkSync(filePath);
       const result = await Images.deleteOne({ _id: req.params.id });
       res.send(result);
     } else {
-      res.status(404).send({ message: 'Image not found' });
+      res.status(404).send({ message: "Image not found" });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send({ message: 'Error deleting image' });
+    res.status(500).send({ message: "Error deleting image" });
   }
 });
+
+/////////////////////////////
 
 
 app.listen(5800);

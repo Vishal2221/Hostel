@@ -3,53 +3,71 @@ import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function Complaint() {
-  const [text, setText] = useState("");
-  const Navigate = useNavigate();
+const Complaint = () => {
+  const [textMessage, setTextMessage] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const auth = localStorage.getItem("user");
 
-  const handleSubmit = async (e) => {
+  const Navigate = useNavigate()
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5800/sendText", {
-      method: "post",
-      body: JSON.stringify({
-        text
-      }),
-      headers: { "content-Type": "application/json" },
-    });
+    sendMessage(JSON.parse(auth)._id, textMessage);
+  };
 
-    if (response.ok) {
-      console.log("Text message sent successfully");
-      Navigate('/StudentPage')
-    } else {
-      console.log("Error sending text message");
+  const sendMessage = async (userId, textMessage) => {
+    try {
+      const response = await fetch(`http://localhost:5800/sendMessage/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ textMessage })
+        
+
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error sending message: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      if(response){
+        Navigate("/StudentPage")
+      }
+      
+      setTextMessage("");
+      setSelectedOption("");
+      
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
   return (
     <>
-      <Navbar />
-      <div className="flex justify-center items-center h-screen">
-        <form className="bg-white p-6 rounded-lg shadow-md w-96" onSubmit={handleSubmit}>
-          <select className="w-full mb-4 p-2 border rounded-md">
+      <Navbar/>
+      <div className="container flex justify-center mt-10 ">
+        <form className="bg-gray-100 p-6 rounded-lg shadow-md w-96" onSubmit={handleSubmit}>
+          <select
+            className="w-full mb-4 p-2 border rounded-md"
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+          >
             <option value="service">Service</option>
             <option value="complaint">Complaint</option>
           </select>
           <textarea
             className="w-full h-32 p-2 border rounded-md resize-y"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={textMessage}
+            onChange={(e) => setTextMessage(e.target.value)}
             placeholder="Write here"
-          ></textarea>
-          <button
-            className="w-full py-2 px-4 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            type="submit"
-          >
+          />
+          <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Submit
           </button>
         </form>
       </div>
-
-      <Footer />
     </>
   );
 }

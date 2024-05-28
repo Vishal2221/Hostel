@@ -17,7 +17,6 @@ function Update() {
     const [rollNumber, setRollNumber] = useState("");
     const [semester, setsemester] = useState("");
     const [Block, setBlock] = useState("");
-    const [email, setEmail] = useState("");
     
     const Navigate = useNavigate()
     const params = useParams()
@@ -38,7 +37,7 @@ function Update() {
         setName(result.Name)
         setRoomNumber(result.roomNumber)
         setBlock(result.Block)
-        setEmail(result.email)
+       
         setPhoneNumber(result.phoneNumber)
         setRollNumber(result.rollNumber)
         setsemester(result.semester)
@@ -54,7 +53,7 @@ function Update() {
     const updateUser = async () => {
         let result = fetch(`http://localhost:5800/users/${params.id}`, {
             method: 'Put',
-            body: JSON.stringify({ Name, roomNumber, email,Block,phoneNumber, rollNumber, semester }),
+            body: JSON.stringify({ Name, roomNumber, Block,phoneNumber, rollNumber, semester }),
             headers: {
                 'Content-Type': "application/json"
             }

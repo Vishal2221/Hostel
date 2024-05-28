@@ -1,15 +1,22 @@
-import { Carousel } from 'bootstrap';
+
 import Footer from './Footer';
 import Navbar from './Navbar';
 import image from "./images/hostel1.jpg"
+import React from "react";
+
 
 
 
 function Home() {
+
+   
     return(
     <>
     
     <Navbar/>
+
+     
+
     <div className='' style={{ backgroundImage:`url(${image})` }}>
         <div className=" flex container items-center h-screen  justify-evenly my-auto">
 
@@ -69,5 +76,4 @@ function Home() {
     </>
     )
 }
-
 export default Home

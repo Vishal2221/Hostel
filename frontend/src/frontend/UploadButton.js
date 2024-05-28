@@ -1,69 +1,53 @@
-import React, { useState } from 'react';
-
+import React, { useState } from "react";
+import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
 
 const UploadButton = () => {
-  const [file, setFile] = useState(null);
-  
-
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
-    const uploadedFile = event.target.files[0];
-    setFile(uploadedFile);
-
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-     
-    };
-    fileReader.readAsDataURL(uploadedFile);
-    
+    setSelectedFile(event.target.files[0]);
   };
 
-  const handleUpload = async () => {
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
+  const handleUpload = () => {
+    if (!selectedFile) return;
 
-      try {
-        const response = await fetch('/upload', {
-          method: 'POST',
-          body: formData,
-        });
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const workbook = XLSX.read(event.target.result, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const data = XLSX.utils.sheet_to_json(worksheet);
 
-        if (response.ok) {
-          console.log('File uploaded successfully!');
-        } else {
-          console.error('Error uploading file:', response.status);
-        }
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      }
-    } else {
-      console.log('Please select a file to upload.');
-    }
-
+      // Send the data to the server to store in the database
+      fetch("/api/upload-xlsx", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+       .then((response) => response.json())
+       .then((data) => console.log("Data uploaded successfully!"))
+       .catch((error) => console.error("Error uploading data:", error));
+    };
+    reader.readAsArrayBuffer(selectedFile);
   };
 
   return (
-
     <>
-
-
-
       <div className="container flex justify-center">
-
-        <input className='my-2' type="file" accept=".xlsx" onChange={handleFileChange} />
+        <input
+          className="my-2"
+          type="file"
+          accept=".xlsx"
+          onChange={handleFileChange}
+        />
         <button
-          className='bg-gray-200 p-2.5 my-2 rounded-3xl hover:bg-green-300 hover:text-black '
-          onClick={
-            handleUpload
-
-          }
+          className="bg-gray-200 p-2.5 my-2 rounded-3xl hover:bg-green-300 hover:text-black "
+          onClick={handleUpload}
         >
           Upload XLSX File
         </button>
-       
       </div>
-
     </>
   );
 };
