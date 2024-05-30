@@ -17,6 +17,7 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import HostelStudents from "./HostelStudents";
 
+
 function App() {
   const User_Type = {
     public: "PUBLIC",
@@ -24,7 +25,9 @@ function App() {
     admin: "ADMIN",
   };
 
-  const [CurrentUser, setCurrentUser] = useState(localStorage.getItem("CurrentUser") || null);
+  const [CurrentUser, setCurrentUser] = useState(
+    localStorage.getItem("CurrentUser") || null
+  );
 
   function PublicElement({ children }) {
     return <>{children}</>;
@@ -48,7 +51,7 @@ function App() {
 
   const setAndStoreCurrentUser = (userType) => {
     setCurrentUser(userType);
-    localStorage.setItem('CurrentUser', userType);
+    localStorage.setItem("CurrentUser", userType);
   };
 
   return (
@@ -73,7 +76,7 @@ function App() {
             }
           ></Route>
 
-<Route
+          <Route
             path="/NewLogin"
             element={
               <PublicElement>
@@ -81,7 +84,9 @@ function App() {
               </PublicElement>
             }
           />
-          
+   
+
+
           <Route
             path="/NotAllowed"
             element={

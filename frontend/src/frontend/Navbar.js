@@ -24,15 +24,15 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="bg-white  text-grey-800 p-4 flex shadow-md">
-      <div className="logo  fixed">
-        <Link to="/home">
+    <div className="bg-white  text-grey-800 p-4 flex shadow-md ">
+      <div className="logo  ">
+       
           <img
             className="float-left max-h-20"
             src="LOGO_50135-removebg-preview.png"
             alt=""
           />
-        </Link>
+        
       </div>
 
       <div className="mx-auto space-y-4 ">

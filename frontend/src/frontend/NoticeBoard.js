@@ -63,21 +63,8 @@ function NoticeBoard() {
 
   return (
     <>
-     <div className="flex bg-blue-300 font-serif p-2 items-center justify-evenly m-0">
-        <div className="logo ">
-          <img
-            className="float-left max-h-20"
-            src="LOGO_50135-removebg-preview.png"
-            alt=""
-          />
-        </div>
-        <div className="mx-auto ">
-          <div className="self-start text-5xl">
-            <h1>Boys Hostel GCET Jammu</h1>
-          </div>
-        </div>
-        
-      </div>
+    <Navbar/>
+     
      <BackButton></BackButton>
      <div className="flex justify-center"> 
      <form
@@ -86,7 +73,7 @@ function NoticeBoard() {
           >
             <input type="file" accept="image/*" onChange={onInputChange} />
             <button className=" border-2 bg-gray-200 px-4 py-2 rounded-2xl  hover:bg-blue-400 hover:text-white " type="submit">
-              Submit
+             Add
             </button>
           </form>
           </div>

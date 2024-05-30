@@ -1,4 +1,3 @@
-// src/components/StudentsTable.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Typography } from "@material-tailwind/react";
@@ -7,6 +6,7 @@ import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import UploadButton from "./UploadButton";
 import BackButton from "./BackButton";
+import Navbar from "./Navbar";
 
 const Hostelirs = () => {
   const navigate = useNavigate();
@@ -44,35 +44,10 @@ const Hostelirs = () => {
   const handleAddMultiple = () => {
     setShowUploadDiv(!showUploadDiv);
   };
+
   return (
     <>
-      <div className="flex bg-blue-300 font-serif p-2 items-center justify-evenly">
-        <div className="logo ">
-          <img
-            className="float-left max-h-20"
-            src="LOGO_50135-removebg-preview.png"
-            alt=""
-          />
-        </div>
-        <div className="mx-auto">
-          <div className="self-start text-5xl">
-            <h1>Boys Hostel GCET Jammu</h1>
-          </div>
-          <div>
-            <ul className="flex space-x-5 text-lg font-sans">
-              <li>
-                <Link to="/Home">Home</Link>
-              </li>
-              <li>
-                <Link to="https://www.gcetjammu.org.in/"> College</Link>
-              </li>
-              <li>
-                <Link to="/Mess"> Mess</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <Navbar/>
       <BackButton />
 
       <div className="flex justify-evenly">
@@ -152,7 +127,6 @@ const Hostelirs = () => {
               </tr>
             </thead>
             <tbody>
-              
               {students?.map((student) => (
                 <tr key={student._id}>
                   <td className="p-4">
