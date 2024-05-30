@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { Card } from "@material-tailwind/react";
+import BackButton from "./BackButton";
 
 export default function Messages() {
   const [messages, setMessages] = useState([]);
@@ -31,15 +32,18 @@ export default function Messages() {
   return (
     <>
       <Navbar />
+      <BackButton></BackButton>
       <div className="w-50 mx-auto">
       <Card className="h-70 w-70 my-10 overflow-scroll p-5 bg-gray-200">
+
           
             {messages.map(
               (message, index) =>
                 message.Text && (
                   <div className="rounded-3xl bg-gray-100 py-2 px-3 mt-2 ">
-                    <div className="flex justify-evenly space-x-5 text-xs">
-                      <p>{message.Name}</p>
+                    <div className="flex justify-evenly space-x-5 text-xs text-blue-500">
+                      
+                      <p> {message.Name}</p>
                       <p>{message.phoneNumber}</p>
                       <p>{message.roomNumber}-{message.Block}</p>
                     </div>

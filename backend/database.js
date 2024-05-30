@@ -97,7 +97,7 @@ app.put("/users/:id/change-password", async (req, res) => {
       return res.status(404).send("User not found.");
     }
 
-    // Update the password
+    
     user.Userpassword = req.body.newPassword;
     const result = await user.save();
 
@@ -107,7 +107,30 @@ app.put("/users/:id/change-password", async (req, res) => {
   }
 });
 
+
+
 //send message
+
+app.put("/sendMessage/:id", async( req,res)=> {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).send("User not found.");
+    }
+
+    
+    user.Text = req.body.textMessage;
+    const result = await user.save();
+
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+//delete message
+
 
 app.put("/deleteMessage/:id", async (req, res) => {
   
@@ -118,7 +141,6 @@ app.put("/deleteMessage/:id", async (req, res) => {
       return res.status(404).send("User not found.");
     }
 
-    // Update the password
     user.Text = "";
     const result = await user.save();
 

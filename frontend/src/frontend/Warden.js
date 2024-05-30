@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import React from "react";
 
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +9,12 @@ import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { Outlet, Link } from "react-router-dom";
 
 function Warden() {
+
+ 
   return (
     <>
       <Navbar />
+     
 
       <div className="flex justify-center items-center py-2">
         <h1 className="text-yellow-500">ADMIN ACCESS !!!</h1>
@@ -20,7 +24,7 @@ function Warden() {
         <Link to="/Messages">
           <div className=" flex flex-col items-center">
             <div className="flex justify-center">
-              <FontAwesomeIcon icon={faBell} size="4x" />
+              <FontAwesomeIcon icon={faBell} size="6x" />
             </div>
             <div className="flex justify-end items-end text-3xl">Messages</div>
           </div>
@@ -29,7 +33,7 @@ function Warden() {
         <Link to="/Hostelirs">
           <div className=" flex flex-col items-center">
             <div className="flex justify-center">
-              <FontAwesomeIcon icon={faUsers} size="4x" />
+              <FontAwesomeIcon icon={faUsers} size="6x" />
             </div>
             <div className="flex justify-end items-end text-3xl">
               Hosteliers
@@ -40,7 +44,7 @@ function Warden() {
         <Link to="/NoticeBoard">
           <div className=" flex flex-col items-center">
             <div className="flex justify-center">
-              <FontAwesomeIcon  icon={faClipboard} size="4x" />
+              <FontAwesomeIcon  icon={faClipboard} size="6x" />
             </div>
             <div className="flex justify-end items-end text-3xl">NOTICE</div>
           </div>

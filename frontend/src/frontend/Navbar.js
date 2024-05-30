@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Navbar() {
   const auth = localStorage.getItem("user");
@@ -10,6 +11,17 @@ function Navbar() {
     localStorage.clear();
     navigate("/Home");
   };
+
+  const [time, setTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <div className="bg-white  text-grey-800 p-4 flex shadow-md">
@@ -33,7 +45,13 @@ function Navbar() {
             <li>
               <Link to="https://www.gcetjammu.org.in/"> College</Link>
             </li>
-            <li> <Link to="https://gcetjammu.edugrievance.com/"> Grievance portal</Link></li>
+            <li>
+              {" "}
+              <Link to="https://gcetjammu.edugrievance.com/">
+                {" "}
+                Grievance portal
+              </Link>
+            </li>
             <li>
               {auth ? (
                 <Link to="/Home" onClick={logout}>
@@ -44,6 +62,14 @@ function Navbar() {
               )}
             </li>
           </ul>
+        </div>
+      </div>
+      <div>
+        <div className="text-center text-xl font-mono font-bold ">
+          {time.toLocaleTimeString()}
+        </div>
+        <div className="text-center text-xl font-mono font-bold">
+          {time.toLocaleDateString()}
         </div>
       </div>
     </div>

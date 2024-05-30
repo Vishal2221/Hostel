@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Warden from "./Warden";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import HostelStudents from "./HostelStudents";
 
 function App() {
   const User_Type = {
@@ -23,9 +24,9 @@ function App() {
     admin: "ADMIN",
   };
 
-  const [CurrentUser, setCurrentUser] = useState(null);
+  const [CurrentUser, setCurrentUser] = useState(localStorage.getItem("CurrentUser") || null);
 
-  function publicElement({ children }) {
+  function PublicElement({ children }) {
     return <>{children}</>;
   }
 
@@ -45,6 +46,11 @@ function App() {
 
   var Current_User = User_Type.public;
 
+  const setAndStoreCurrentUser = (userType) => {
+    setCurrentUser(userType);
+    localStorage.setItem('CurrentUser', userType);
+  };
+
   return (
     <>
       <Router>
@@ -52,29 +58,30 @@ function App() {
           <Route
             path="/"
             element={
-              <publicElement>
-                <Home setCurrentUser={setCurrentUser}  />
-              </publicElement>
+              <PublicElement>
+                <Home setCurrentUser={setCurrentUser} />
+              </PublicElement>
             }
           ></Route>
 
           <Route
             path="/home"
             element={
-              <publicElement>
-                <Home  setCurrentUser={setCurrentUser} />
-              </publicElement>
+              <PublicElement>
+                <Home setCurrentUser={setCurrentUser} />
+              </PublicElement>
             }
           ></Route>
 
-          <Route
+<Route
             path="/NewLogin"
             element={
-              <publicElement>
-                <NewLogin setCurrentUser={setCurrentUser} />
-              </publicElement>
+              <PublicElement>
+                <NewLogin setCurrentUser={setAndStoreCurrentUser} />
+              </PublicElement>
             }
-          ></Route>
+          />
+          
           <Route
             path="/NotAllowed"
             element={
@@ -157,9 +164,19 @@ function App() {
               </StudentElement>
             }
           />
+
+          <Route
+            path="/HostelStudents"
+            element={
+              <StudentElement>
+                <HostelStudents />
+              </StudentElement>
+            }
+          />
         </Routes>
       </Router>
     </>
   );
 }
+
 export default App;
