@@ -1,9 +1,7 @@
 import React from "react";
 
 const UploadButton = () => {
-  function uploadFile() {
-    
-  }
+  function uploadFile() {}
 
   return (
     <>
@@ -13,7 +11,6 @@ const UploadButton = () => {
           type="file"
           accept=".xlsx"
           onChange={(e) => uploadFile(e.target.files[0])}
-
           name="file"
           id="fileInput"
         />

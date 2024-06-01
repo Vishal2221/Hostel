@@ -47,7 +47,7 @@ const Hostelirs = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <BackButton />
 
       <div className="flex justify-evenly">

@@ -1,8 +1,7 @@
-
 import Navbar from "./Navbar";
 
 import image from "./images/hostel1.jpg";
-import image2 from "./images/hostel2.jpg";
+
 import React from "react";
 
 function Home() {
@@ -10,36 +9,28 @@ function Home() {
     <>
       <Navbar />
 
-      <div className="" style={{ backgroundImage: `url(${image2})`,backgroundSize: 'cover' }}>
+      <div
+        className=""
+        style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
+      >
         <div className="h-screen w-screen flex items-center justify-center ">
-            
-        
-         <div className=" bg-gray-800/[0.4] rounded-2xl text-white  ">
-        < h1 className="text-4xl font-bold  text-center">Contact us</h1>
+          <div className=" bg-gray-800/[0.4] rounded-2xl text-white  ">
+            <h1 className="text-4xl font-bold  text-center">Contact us</h1>
             <div className="flex justify-evenly space-x-5 ">
-               
-                <div className="p-3  flex flex-col items-center">
-                    <h4 className="underline">Warden</h4>
-                    <h5>Dr. Vikesh Kumar</h5>
-                    <h6>9697327153</h6>
-
-                </div>
-                <div className="p-3 flex flex-col items-center">
+              <div className="p-3  flex flex-col items-center">
+                <h4 className="underline">Warden</h4>
+                <h5>Dr. Vikesh Kumar</h5>
+                <h6>9697327153</h6>
+              </div>
+              <div className="p-3 flex flex-col items-center">
                 <h4 className="underline"> Asst. Warden</h4>
-                    <h5>Om Prakash Sharma</h5>
-                    <h6>9906189933</h6>
-
-                </div>
+                <h5>Om Prakash Sharma</h5>
+                <h6>9906189933</h6>
+              </div>
             </div>
-           
-
-
-
-         </div>
-         
           </div>
         </div>
-      
+      </div>
 
       {/* <div className=" flex container items-center h-screen  justify-evenly my-auto">
 
@@ -87,7 +78,6 @@ function Home() {
                     
                 </div>
                 </div>  */}
-
     </>
   );
 }

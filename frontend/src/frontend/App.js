@@ -17,7 +17,6 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import HostelStudents from "./HostelStudents";
 
-
 function App() {
   const User_Type = {
     public: "PUBLIC",
@@ -84,8 +83,6 @@ function App() {
               </PublicElement>
             }
           />
-   
-
 
           <Route
             path="/NotAllowed"
