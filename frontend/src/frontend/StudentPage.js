@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { stringify, parse } from "flatted";
 import { useParams } from "react-router-dom";
 import { faEnvelopeCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -66,28 +65,30 @@ function StudentPage() {
   async function changeUserPassword(userId, newPassword) {
     setShowPasswordDiv(!showPasswordDiv);
     try {
-      const response = await fetch(`http://localhost:5800/users/${userId}/change-password`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          newPassword: newPassword
-        })
-      });
-  
+      const response = await fetch(
+        `http://localhost:5800/users/${userId}/change-password`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            newPassword: newPassword,
+          }),
+        }
+      );
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.message);
       }
-  
+
       const data = await response.json();
       return data;
     } catch (error) {
       console.error(error);
       throw error;
     }
-    
   }
 
   const showDIV = () => {
@@ -111,10 +112,13 @@ function StudentPage() {
           <div>
             <ul className="flex space-x-5 text-lg font-sans">
               <li>
-                <Link to="/Home">Home</Link>
+                <Link to="https://www.gcetjammu.org.in/"> College</Link>
               </li>
               <li>
-                <Link to="https://www.gcetjammu.org.in/"> College</Link>
+                <Link to="/HostelStudents">Hosteliers</Link>
+              </li>
+              <li>
+                <Link to="/Complaint">Feedback</Link>
               </li>
               <li>
                 {auth ? (
@@ -148,7 +152,9 @@ function StudentPage() {
               ></input>
               <button
                 className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline-purple focus:outline-none text-white px-0 my-1 rounded-2xl"
-                onClick={() => changeUserPassword(JSON.parse(auth)._id, newpassword)}
+                onClick={() =>
+                  changeUserPassword(JSON.parse(auth)._id, newpassword)
+                }
               >
                 submit
               </button>
@@ -162,22 +168,7 @@ function StudentPage() {
       </div>
 
       <div className="flex container items-center h-screen  justify-evenly p-0">
-        {/* <div className="h-65 w-64 bg-white shadow-lg rounded-lg p-2 flex flex-col items-center ">
-          <img
-            className="h-48 w-48 rounded-full object-cover"
-            src={image}
-            alt="User Image"
-          />
-          <h3 className="text-lg font-bold mt-5">{JSON.parse(auth).Name}</h3>
-          <p className="text-gray-500">{JSON.parse(auth).roomNumber}</p>
-          <input
-            className="mx-auto w-48 overflow-hidden"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-
-        </div> */}
+       
 
         <div className="container w-75 h-75 mt-0">
           <div className="flex justify-center">
@@ -195,14 +186,14 @@ function StudentPage() {
             })}
         </div>
 
-        <Link to="/Complaint">
+        {/* <Link to="/Complaint">
           <div className="p-8 h-54 w-48 rounded-2xl flex flex-col bg-green-400 items-center">
             <div className="flex justify-center">
               <FontAwesomeIcon icon={faEnvelopeCircleCheck} size="4x" />
             </div>
             <div className="flex justify-end items-end text-3xl">Message</div>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

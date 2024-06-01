@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
+import BackButton from "./BackButton";
 
 function NoticeBoard() {
   const [image, setImage] = useState(null);
@@ -52,9 +53,11 @@ function NoticeBoard() {
 
   const deleteImage = async (id) => {
     try {
-      const result = await axios.delete(`http://localhost:5800/deleteImage/${id}`);
+      const result = await axios.delete(
+        `http://localhost:5800/deleteImage/${id}`
+      );
       console.log(result);
-      setAllImage(allImage.filter((image) => image._id!== id));
+      setAllImage(allImage.filter((image) => image._id !== id));
     } catch (error) {
       console.log(error);
     }
@@ -63,32 +66,46 @@ function NoticeBoard() {
   return (
     <>
       <Navbar />
+
+      <BackButton></BackButton>
+      <div className="flex justify-center">
+        <form
+          onSubmit={submitImage}
+          className="bg-gray-300 py-2 px-4 rounded-2xl"
+        >
+          <input type="file" accept="image/*" onChange={onInputChange} />
+          <button
+            className=" border-2 bg-gray-200 px-4 py-2 rounded-2xl  hover:bg-blue-400 hover:text-white "
+            type="submit"
+          >
+            Add
+          </button>
+        </form>
+      </div>
       <div className="flex justify-center">
         <h1>NOTICE BOARD </h1>
       </div>
       <div className="container">
         <div className="mt-2">
-          {Array.isArray(allImage) && allImage.length > 0 && allImage.map((data) => {
-                return (
-                  <div key={data._id} className="mt-1">
-                    <img src={require(`./images/${data.image}`)}></img>
-                    <div className="flex justify-center"><button className="bg-gray-300 px-4 py-2 rounded-2xl  hover:bg-red-600 hover:text-white " onClick={() => deleteImage(data._id)}>DELETE</button></div>
-                    
+          {Array.isArray(allImage) &&
+            allImage.length > 0 &&
+            allImage.map((data) => {
+              return (
+                <div key={data._id} className="mt-1">
+                  <img src={require(`./images/${data.image}`)}></img>
+                  <div className="flex justify-center">
+                    <button
+                      className="bg-gray-300 px-4 py-2 rounded-2xl  hover:bg-red-600 hover:text-white "
+                      onClick={() => deleteImage(data._id)}
+                    >
+                      DELETE
+                    </button>
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
         </div>
-        <div className="flex justify-center p-3">
-          <form
-            onSubmit={submitImage}
-            className="bg-gray-300 py-2 px-4 rounded-2xl"
-          >
-            <input type="file" accept="image/*" onChange={onInputChange} />
-            <button className=" hover:text-green-600" type="submit">
-              Submit
-            </button>
-          </form>
-        </div>
+        <div className="flex justify-center p-3"></div>
       </div>
     </>
   );

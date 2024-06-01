@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function BackButton()
+function BackButton() {
+  const Navigate = useNavigate();
 
-{
-    const Navigate = useNavigate();
-
-    return(
-        <div className="m-2 ">  <button
-        className="text-gray-600 hover:text-gray-900 transition duration-300 ease-in-out mb-2"
+  return (
+    <div className="m-2 ">
+      {" "}
+      <button
+        className="text-gray-600 hover:text-gray-900 transition duration-300 ease-in-out mb-2 bg-yellow-400 pr-5 rounded-2xl"
         onClick={() => Navigate(-1)}
       >
         <svg
@@ -16,7 +16,7 @@ function BackButton()
           fill="none"
           viewBox="0 0 10 24"
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-8 h-8 "
         >
           <path
             strokeLinecap="round"
@@ -25,9 +25,8 @@ function BackButton()
             d="M15 19l-7-7 7-7"
           />
         </svg>
-      </button></div>
-    )
-
-
+      </button>
+    </div>
+  );
 }
 export default BackButton;

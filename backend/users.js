@@ -7,10 +7,8 @@ const userSchema = new mongoose.Schema({
   phoneNumber: Number,
   rollNumber: Number,
   semester: Number,
-  email:String,
-  text:String,
-  image:String,
   Userpassword:String,
+  Text:String,
 });
 
 

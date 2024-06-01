@@ -13,6 +13,7 @@ function NewLogin({ setCurrentUser }) {
   const [Userpassword, setUserPassword] = useState("");
   const [rollNumber, setRollNumber] = useState("");
   const [isAdmin, setIsAdmin] = useState(true);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +34,7 @@ function NewLogin({ setCurrentUser }) {
     if (result.username) {
       
       localStorage.setItem("user", JSON.stringify(result));
-      setCurrentUser(User_Type.admin)
+      setCurrentUser("admin")
       navigate("/Warden");
     } else {
       navigate("/home");
@@ -53,7 +54,7 @@ function NewLogin({ setCurrentUser }) {
     console.log(result);
     if (result.rollNumber) {
       console.log("verified");
-      setCurrentUser(User_Type.student)
+      setCurrentUser("student")
       localStorage.setItem("user", JSON.stringify(result));
       navigate("/StudentPage");
     } else {
@@ -120,7 +121,7 @@ function NewLogin({ setCurrentUser }) {
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
                 <button
-                  className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline-purple focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  className="mt-2 shadow bg-purple-500 hover:bg-purple-400  focus:shadow-outline-purple focus:outline-none text-white font-bold py-2 px-4 rounded"
                   type="submit"
                   onClick={proceedLogin}
                 >
@@ -145,7 +146,7 @@ function NewLogin({ setCurrentUser }) {
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
                 <button
-                  className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline-purple focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline-purple focus:outline-none text-white font-bold py-2 px-4 mt-2 rounded"
                   type="submit"
                   onClick={userLogin}
                 >
