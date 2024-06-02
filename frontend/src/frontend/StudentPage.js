@@ -162,14 +162,12 @@ function StudentPage() {
           )}
           <h4 className="mx-1">{JSON.parse(auth).Name}</h4>{" "}
           <h5 className="mx-1">
-            {JSON.parse(auth).roomNumber}-{JSON.parse(auth).Block}
+            {JSON.parse(auth).RoomNumber}-{JSON.parse(auth).Block}
           </h5>
         </div>
       </div>
 
       <div className="flex container items-center h-screen  justify-evenly p-0">
-       
-
         <div className="container w-75 h-75 mt-0">
           <div className="flex justify-center">
             <h3 className="">NOTICE BOARD !!</h3>

@@ -24,7 +24,7 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="bg-white  text-grey-800 p-4 flex shadow-md ">
+    <div className="bg-white  text-grey-800 p-4 flex shadow-md w-auto">
       <div className="logo  ">
         <img
           className="float-left max-h-20"

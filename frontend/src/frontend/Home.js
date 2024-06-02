@@ -13,7 +13,7 @@ function Home() {
         className=""
         style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
       >
-        <div className="h-screen w-screen flex items-center justify-center ">
+        <div className="h-screen flex items-center justify-center ">
           <div className=" bg-gray-800/[0.4] rounded-2xl text-white  ">
             <h1 className="text-4xl font-bold  text-center">Contact us</h1>
             <div className="flex justify-evenly space-x-5 ">

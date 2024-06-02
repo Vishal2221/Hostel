@@ -5,7 +5,7 @@ function BackButton() {
   const Navigate = useNavigate();
 
   return (
-    <div className="m-2 ">
+    <div className="m-2 w-auto">
       {" "}
       <button
         className="text-gray-600 hover:text-gray-900 transition duration-300 ease-in-out mb-2 bg-yellow-400 pr-5 rounded-2xl"
