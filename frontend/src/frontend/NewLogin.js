@@ -11,9 +11,8 @@ function NewLogin({ setCurrentUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [Userpassword, setUserPassword] = useState("");
-  const [rollNumber, setRollNumber] = useState("");
+  const [RollNumber, setRollNumber] = useState("");
   const [isAdmin, setIsAdmin] = useState(true);
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,9 +31,8 @@ function NewLogin({ setCurrentUser }) {
     result = await result.json();
     console.log(result);
     if (result.username) {
-      
       localStorage.setItem("user", JSON.stringify(result));
-      setCurrentUser("admin")
+      setCurrentUser("admin");
       navigate("/Warden");
     } else {
       navigate("/home");
@@ -42,19 +40,19 @@ function NewLogin({ setCurrentUser }) {
   };
 
   const userLogin = async () => {
-    console.log(Userpassword, rollNumber);
+    console.log(Userpassword, RollNumber);
     let result = await fetch("http://localhost:5800/verifyNumber", {
       method: "post",
-      body: JSON.stringify({ rollNumber, Userpassword}),
+      body: JSON.stringify({ RollNumber, Userpassword }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     result = await result.json();
     console.log(result);
-    if (result.rollNumber) {
+    if (result.RollNumber) {
       console.log("verified");
-      setCurrentUser("student")
+      setCurrentUser("student");
       localStorage.setItem("user", JSON.stringify(result));
       navigate("/StudentPage");
     } else {
@@ -133,7 +131,7 @@ function NewLogin({ setCurrentUser }) {
                 <label>Roll Number:</label>
                 <input
                   type="text"
-                  value={rollNumber}
+                  value={RollNumber}
                   onChange={(e) => setRollNumber(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />

@@ -1,47 +1,41 @@
 import { useNavigate } from "react-router-dom";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function RegistrationForm() {
   // Define the state variables for the form fields
   const [Name, setName] = useState("");
-  const [roomNumber, setRoomNumber] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [rollNumber, setRollNumber] = useState("");
-  const [semester, setsemester] = useState("");
-  
+  const [Email, setEmail] = useState("");
+  const [RoomNumber, setRoomNumber] = useState("");
+  const [PhoneNumber, setPhoneNumber] = useState("");
+  const [RollNumber, setRollNumber] = useState("");
+  const [Semester, setsemester] = useState("");
+  const [Address, setAddress] = useState("");
   const [Block, setBlock] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const Navigate = useNavigate();
 
-  
   const collectData = async () => {
-    console.log(
-      Name,
-     
-      roomNumber,
-      Block,
-      phoneNumber,
-      rollNumber,
-      semester
-    );
+    console.log(Name, RoomNumber, Block, PhoneNumber, RollNumber, Semester);
+    setLoading(true);
     let result = await fetch("http://localhost:5800/register", {
       method: "post",
       body: JSON.stringify({
         Name,
-        
-        roomNumber,
+        RoomNumber,
         Block,
-        phoneNumber,
-        rollNumber,
-        semester,
+        PhoneNumber,
+        RollNumber,
+        Semester,
+        Address,
       }),
       headers: { "content-Type": "application/json" },
     });
     result = await result.json();
     console.log(result);
-    localStorage.setItem("user", JSON.stringify(result));
-
+    // localStorage.setItem("user", JSON.stringify(result));
+    setLoading(false);
     Navigate("/Hostelirs");
   };
 
@@ -76,7 +70,7 @@ function RegistrationForm() {
           <form className="mt-4 space-y-4">
             <div className="flex flex-col">
               <label
-                htmlFor="firstName"
+                htmlFor="Name"
                 className="text-sm font-medium text-gray-600"
               >
                 Name
@@ -91,21 +85,36 @@ function RegistrationForm() {
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
-
-           
+            <div className="flex flex-col">
+              <label
+                htmlFor="Email"
+                className="text-sm font-medium text-gray-600"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="Email"
+                name="Email"
+                value={Email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
 
             <div className="flex flex-col">
               <label
-                htmlFor="roomNumber"
+                htmlFor="RoomNumber"
                 className="text-sm font-medium text-gray-600"
               >
                 Room Number
               </label>
               <input
-                type="number"
-                id="roomNumber"
-                name="roomNumber"
-                value={roomNumber}
+                type="text"
+                id="RoomNumber"
+                name="RoomNumber"
+                value={RoomNumber}
                 onChange={(e) => setRoomNumber(e.target.value)}
                 required
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -114,7 +123,7 @@ function RegistrationForm() {
 
             <div className="flex flex-col">
               <label
-                htmlFor="roomNumber"
+                htmlFor="Block"
                 className="text-sm font-medium text-gray-600"
               >
                 Block
@@ -132,16 +141,16 @@ function RegistrationForm() {
 
             <div className="flex flex-col">
               <label
-                htmlFor="phoneNumber"
+                htmlFor="PhoneNumber"
                 className="text-sm font-medium text-gray-600"
               >
                 Phone Number
               </label>
               <input
                 type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={phoneNumber}
+                id="PhoneNumber"
+                name="PhoneNumber"
+                value={PhoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 required
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -150,16 +159,16 @@ function RegistrationForm() {
 
             <div className="flex flex-col">
               <label
-                htmlFor="semester"
+                htmlFor="Semester"
                 className="text-sm font-medium text-gray-600"
               >
                 Semester
               </label>
               <input
-                type="text"
-                id="semester"
-                name="semester"
-                value={semester}
+                type="number"
+                id="Semester"
+                name="Semester"
+                value={Semester}
                 onChange={(e) => setsemester(e.target.value)}
                 required
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -167,17 +176,34 @@ function RegistrationForm() {
             </div>
             <div className="flex flex-col">
               <label
-                htmlFor="rollNumber"
+                htmlFor="RollNumber"
                 className="text-sm font-medium text-gray-600"
               >
                 Roll Number
               </label>
               <input
                 type="number"
-                id="rollNumber"
-                name="rollNumber"
-                value={rollNumber}
+                id="RollNumber"
+                name="RollNumber"
+                value={RollNumber}
                 onChange={(e) => setRollNumber(e.target.value)}
+                required
+                className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label
+                htmlFor="Address"
+                className="text-sm font-medium text-gray-600"
+              >
+                Address
+              </label>
+              <input
+                type="text"
+                id="Address"
+                name="Address"
+                value={Address}
+                onChange={(e) => setAddress(e.target.value)}
                 required
                 className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -188,7 +214,7 @@ function RegistrationForm() {
                 onClick={collectData}
                 className="w-32 p-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
-                Submit
+                {loading ? "Loading..." : "Submit"}
               </button>
             </div>
           </form>

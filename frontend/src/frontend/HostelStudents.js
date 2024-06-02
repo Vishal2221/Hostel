@@ -9,13 +9,11 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "./BackButton";
 
 const HostelStudents = () => {
-    const auth = localStorage.getItem("user");
+  const auth = localStorage.getItem("user");
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
- 
 
   useEffect(() => {
-   
     axios
       .get("http://localhost:5800/getData")
       .then((response) => {
@@ -26,7 +24,6 @@ const HostelStudents = () => {
       });
   }, []);
 
- 
   return (
     <>
       <div className="flex bg-blue-300 font-serif p-2 items-center justify-evenly m-0">
@@ -45,17 +42,16 @@ const HostelStudents = () => {
         <div className="float-right px-2 flex">
           <h4 className="mx-1">{JSON.parse(auth).Name}</h4>{" "}
           <h5 className="mx-1">
-            {JSON.parse(auth).roomNumber}-{JSON.parse(auth).Block}
+            {JSON.parse(auth).RoomNumber}-{JSON.parse(auth).Block}
           </h5>
         </div>
       </div>
       <BackButton />
       <div class="text-2xl font-bold text-center text-blue-500 mt-10 underline">
-  Students  residing in  the Hostel
-</div>
+        Students residing in the Hostel
+      </div>
 
       <div className="flex justify-evenly">
-        
         <Card className="h-70 w-70 my-10 overflow-scroll">
           <table className=" table-auto text-left">
             <thead>
@@ -104,78 +100,73 @@ const HostelStudents = () => {
                     color="blue-gray"
                     className="font-normal leading-none opacity-70"
                   >
-                    semester
+                    Semester
                   </Typography>
                 </th>
-
 
                 {/* Add other table headers (Roll Number, Fee Paid, Phone, Semester) */}
               </tr>
             </thead>
             <tbody>
-              
-              {students?.map((student) => (
-                <tr key={student._id}>
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {student.roomNumber}
-                    </Typography>
-                  </td>
+              {Array.isArray(students) &&
+                students?.map((student) => (
+                  <tr key={student._id}>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.RoomNumber}
+                      </Typography>
+                    </td>
 
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {student.Block}
-                    </Typography>
-                  </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.Block}
+                      </Typography>
+                    </td>
 
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {student.Name}
-                    </Typography>
-                  </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.Name}
+                      </Typography>
+                    </td>
 
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {student.phoneNumber}
-                    </Typography>
-                  </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.PhoneNumber}
+                      </Typography>
+                    </td>
 
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {student.semester}
-                    </Typography>
-                  </td>
-                 
-
-                 
-                </tr>
-              ))}
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.Semester}
+                      </Typography>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </Card>
       </div>
 
-     
       <Footer />
     </>
   );

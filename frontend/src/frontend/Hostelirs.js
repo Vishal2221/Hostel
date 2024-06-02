@@ -13,7 +13,7 @@ const Hostelirs = () => {
   const [students, setStudents] = useState([]);
   const [showUploadDiv, setShowUploadDiv] = useState(false);
 
-  useEffect(() => {
+  function getData() {
     // Fetch student data from your backend API (replace with your actual API endpoint)
     axios
       .get("http://localhost:5800/getData")
@@ -23,6 +23,10 @@ const Hostelirs = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const deleteUser = async (id) => {
@@ -31,7 +35,8 @@ const Hostelirs = () => {
     });
     result = await result.json();
     if (result) {
-      alert(" deleted");
+      getData();
+      alert("Deleted Student Successfully");
     }
 
     console.warn(id);
@@ -50,185 +55,225 @@ const Hostelirs = () => {
       <Navbar />
       <BackButton />
 
-      <div className="flex justify-evenly">
-        <Card className="h-70 w-70 my-10 overflow-scroll">
-          <table className=" table-auto text-left">
-            <thead>
-              <tr>
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Room
-                  </Typography>
-                </th>
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Block
-                  </Typography>
-                </th>
-
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Name
-                  </Typography>
-                </th>
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    phone
-                  </Typography>
-                </th>
-
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    semester
-                  </Typography>
-                </th>
-
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    roll number
-                  </Typography>
-                </th>
-
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    Operation
-                  </Typography>
-                </th>
-
-                {/* Add other table headers (Roll Number, Fee Paid, Phone, Semester) */}
-              </tr>
-            </thead>
-            <tbody>
-              {students?.map((student) => (
-                <tr key={student._id}>
-                  <td className="p-4">
+      <div className="flex justify-start flex-col items-center min-h-[40vh] max-h-[60vh] gap-3 w-auto">
+        <h2 className="underline text-[#A91D3A]">Students Data</h2>
+        {Array.isArray(students) && students.length > 0 ? (
+          <Card className="rounded-none w-[90vw] mb-[4rem] overflow-scroll ">
+            <table className=" table-auto text-center border border-black">
+              <thead>
+                <tr>
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-bold leading-none "
                     >
-                      {student.roomNumber}
+                      S. No.
                     </Typography>
-                  </td>
-
-                  <td className="p-4">
+                  </th>
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-bold leading-none "
                     >
-                      {student.Block}
+                      Name
                     </Typography>
-                  </td>
-
-                  <td className="p-4">
+                  </th>
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-bold leading-none "
                     >
-                      {student.Name}
+                      Room
                     </Typography>
-                  </td>
-
-                  <td className="p-4">
+                  </th>
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-bold leading-none "
                     >
-                      {student.phoneNumber}
+                      Block
                     </Typography>
-                  </td>
+                  </th>
 
-                  <td className="p-4">
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-bold leading-none "
                     >
-                      {student.semester}
+                      Phone No.
                     </Typography>
-                  </td>
-                  <td className="p-4">
+                  </th>
+
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-bold leading-none "
                     >
-                      {student.rollNumber}
+                      Semester
                     </Typography>
-                  </td>
+                  </th>
 
-                  <td className="p-4 flex justify-evenly">
-                    <button
-                      className="bg-gray-300 px-2 py-2 rounded-3xl hover:bg-black hover:text-white"
-                      type="submit"
-                      onClick={() => deleteUser(student._id)}
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-bold leading-none "
                     >
-                      Delete
-                    </button>
+                      Roll Number
+                    </Typography>
+                  </th>
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-bold leading-none "
+                    >
+                      Address
+                    </Typography>
+                  </th>
 
-                    <Link to={"/Update/" + student._id} className="p-2 ">
-                      Update
-                    </Link>
-                  </td>
+                  <th className="border-b border-black bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-bold leading-none "
+                    >
+                      Operation
+                    </Typography>
+                  </th>
+
+                  {/* Add other table headers (Roll Number, Fee Paid, Phone, Semester) */}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </Card>
+              </thead>
+              <tbody>
+                {students?.map((student, index) => (
+                  <tr key={student._id}>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {index + 1}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.Name}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.RoomNumber}
+                      </Typography>
+                    </td>
+
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.Block}
+                      </Typography>
+                    </td>
+
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.PhoneNumber}
+                      </Typography>
+                    </td>
+
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.Semester}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.RollNumber}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {student.Address}
+                      </Typography>
+                    </td>
+
+                    <td className="p-4 flex justify-evenly">
+                      <button
+                        className="bg-gray-300 px-2 rounded-lg hover:bg-black hover:text-white"
+                        type="submit"
+                        onClick={() => deleteUser(student._id)}
+                      >
+                        Delete
+                      </button>
+
+                      <Link to={"/Update/" + student._id} className="p-2 ">
+                        Update
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Card>
+        ) : (
+          <p>No student data available. Please add some students.</p>
+        )}
       </div>
 
       <div className=" border-t-2 mx-20 flex justify-center items-center">
-        <h4 className="text-blue-500">ADD STUDENTS</h4>
+        <h4 className="text-blue-500 pt-2 underline">ADD STUDENTS</h4>
         <br />
       </div>
-      <div className="flex justify-center space-x-48 py-5">
+      <div className="flex justify-center space-x-48 pt-4 pb-10">
         <button
           onClick={addsingle}
-          className="bg-gray-300 px-3 py-3 rounded-3xl hover:bg-blue-200 hover:text-black "
+          className="bg-gray-300 px-3 py-2 rounded-lg hover:bg-blue-200 hover:text-black "
         >
           ADD SINGLE
         </button>
         <button
           onClick={handleAddMultiple}
-          className="bg-gray-300 px-3 py-3 rounded-3xl  hover:bg-blue-200 hover:text-black "
+          className="bg-gray-300 px-3 py-2 rounded-lg  hover:bg-blue-200 hover:text-black "
         >
           ADD MULTIPLE
         </button>
       </div>
       {showUploadDiv && (
         <div className="border-t-2 mx-20 flex justify-center items-center">
-          <UploadButton state="false" />
+          <UploadButton getData={getData} setShowUploadDiv={setShowUploadDiv} />
         </div>
       )}
 
