@@ -39,16 +39,16 @@ export default function Messages() {
           
             {messages.map(
               (message, index) =>
-                message.Text && (
+                message.Message && (
                   <div className="rounded-3xl bg-gray-100 py-2 px-3 mt-2 ">
                     <div className="flex justify-evenly space-x-5 text-xs text-blue-500">
                       
                       <p> {message.Name}</p>
-                      <p>{message.phoneNumber}</p>
-                      <p>{message.roomNumber}-{message.Block}</p>
+                      <p>{message.PhoneNumber}</p>
+                      <p>{message.RoomNumber}-{message.Block}</p>
                     </div>
                     <div className="text-base flex justify-between ">
-                      {message.Text}
+                      {message.Message}
                       <button
                       className="bg-gray-300 px-2 py-2 rounded-3xl hover:bg-black hover:text-white"
                       type="submit"
