@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 require("./config");
-const xlsx = require("xlsx");
 const User = require("./users");
 const app = express();
 
@@ -11,9 +10,22 @@ app.use(cors());
 
 // Create a new user instance with the request body data
 app.post("/register", async (req, resp) => {
-  let user = new User(req.body);
-  user.Userpassword = req.body.phoneNumber;
-  let result = await user.save();
+  // Check if a student with the same roll number already exists
+  const existingStudent = await User.findOne({
+    RollNumber: req.body.RollNumber,
+  });
+  let result;
+  if (!existingStudent) {
+    let user = new User(req.body);
+    user.Userpassword = req.body.Semester + "#" + req.body.RollNumber;
+    result = await user.save();
+  } else {
+    result = await User.findOneAndUpdate(
+      { RollNumber: req.body.RollNumber }, // search criteria
+      req.body, // new data
+      { upsert: true } // if the student doesn't exist, insert it
+    );
+  }
 
   resp.send(result);
 });
@@ -34,7 +46,7 @@ app.post("/login", async (req, resp) => {
 
 //verify phoneNumber
 app.post("/verifyNumber", async (req, resp) => {
-  if (req.body.rollNumber && req.body.Userpassword) {
+  if (req.body.RollNumber && req.body.Userpassword) {
     let user = await User.findOne(req.body).select("-Userpassword");
     if (user) {
       resp.send(user);
@@ -48,8 +60,8 @@ app.post("/verifyNumber", async (req, resp) => {
 
 //show student data
 app.get("/getData", async (req, resp) => {
-  let user = await User.find({ rollNumber: { $exists: true } }).sort({
-    roomNumber: 1,
+  let user = await User.find({ RollNumber: { $exists: true } }).sort({
+    Semester: 1,
   });
   if (user.length > 0) {
     resp.send(user);
@@ -98,7 +110,6 @@ app.put("/users/:id/change-password", async (req, res) => {
       return res.status(404).send("User not found.");
     }
 
-    
     user.Userpassword = req.body.newPassword;
     const result = await user.save();
 
@@ -108,11 +119,9 @@ app.put("/users/:id/change-password", async (req, res) => {
   }
 });
 
-
-
 //send message
 
-app.put("/sendMessage/:id", async( req,res)=> {
+app.put("/sendMessage/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
@@ -120,8 +129,7 @@ app.put("/sendMessage/:id", async( req,res)=> {
       return res.status(404).send("User not found.");
     }
 
-    
-    user.Text = req.body.textMessage;
+    user.Message = req.body.textMessage;
     const result = await user.save();
 
     res.send(result);
@@ -132,9 +140,7 @@ app.put("/sendMessage/:id", async( req,res)=> {
 
 //delete message
 
-
 app.put("/deleteMessage/:id", async (req, res) => {
-  
   try {
     const user = await User.findById(req.params.id);
 
@@ -142,7 +148,7 @@ app.put("/deleteMessage/:id", async (req, res) => {
       return res.status(404).send("User not found.");
     }
 
-    user.Text = "";
+    user.Message = "";
     const result = await user.save();
 
     res.send(result);
@@ -150,11 +156,6 @@ app.put("/deleteMessage/:id", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
-
-
-
-
 
 ////////////////////////////
 
@@ -231,7 +232,67 @@ app.delete("/deleteImage/:id", async (req, res) => {
 
 /////////////////////////////
 
+////////   EXCEL SHEET FILE UPLOAD LOGIC ////////////////////////
 
+const XLSX = require("xlsx");
+const fileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../frontend/src/frontend/files/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, "Student-Data" + uniqueSuffix + file.originalname);
+  },
+});
 
+const uploadFile = multer({ storage: fileStorage });
 
-app.listen(5800);
+app.post("/upload/file", uploadFile.single("file"), async (req, res) => {
+  try {
+    const file = req.file;
+    const workbook = XLSX.readFile(file.path);
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+    const data = XLSX.utils.sheet_to_json(sheet);
+
+    for (let item of data) {
+      const student = {
+        Name: item.Name,
+        Email: item.Email,
+        RoomNumber: item.Room_No,
+        Block: item.Block,
+        PhoneNumber: item.Phone_No,
+        RollNumber: item.Roll_No,
+        Semester: item.Semester,
+        Branch: item.Branch,
+        Address: item.Address,
+        Userpassword: item.Semester + "#" + item.Roll_No,
+      };
+
+      // Check if a student with the same roll number already exists
+      const existingStudent = await User.findOne({
+        RollNumber: student.RollNumber,
+      });
+
+      if (!existingStudent) {
+        // If the student doesn't exist, insert their data
+        await User.create(student);
+      } else {
+        // Replace the old student's data with the new one
+        await User.findOneAndUpdate(
+          { RollNumber: student.RollNumber }, // search criteria
+          student, // new data
+          { upsert: true } // if the student doesn't exist, insert it
+        );
+      }
+    }
+    res.status(200).send("Students data uploaded successfully.");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error uploading data.");
+  }
+});
+
+app.listen(5800, () => {
+  console.log("Server is running on port 5800");
+});
