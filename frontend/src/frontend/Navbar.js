@@ -40,6 +40,9 @@ function Navbar() {
 
         <div className="flex justify-center ">
           <ul className="flex space-x-5 text-lg font-sans">
+          <li>
+              <Link to="/Home"> Home</Link>
+            </li>
             <li>
               <Link to="https://www.gcetjammu.org.in/"> College</Link>
             </li>

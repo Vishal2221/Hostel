@@ -4,7 +4,19 @@ import image from "./images/hostel1.jpg";
 
 import React from "react";
 
-function Home() {
+import { Navigate } from "react-router-dom";
+
+
+function Home( {setCurrentUser}) {
+
+  if (localStorage.getItem("CurrentUser")) {
+    const currentUser = localStorage.getItem("CurrentUser");
+    if (currentUser === "admin") {
+      return <Navigate to="/Warden" replace />;
+    } else if (currentUser === "student") {
+      return <Navigate to="/StudentPage" replace />;
+    }
+  }
   return (
     <>
       <Navbar />
@@ -13,7 +25,7 @@ function Home() {
         className=""
         style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
       >
-        <div className="h-screen w-screen flex items-center justify-center ">
+        <div className="h-screen flex items-center justify-center ">
           <div className=" bg-gray-800/[0.4] rounded-2xl text-white  ">
             <h1 className="text-4xl font-bold  text-center">Contact us</h1>
             <div className="flex justify-evenly space-x-5 ">

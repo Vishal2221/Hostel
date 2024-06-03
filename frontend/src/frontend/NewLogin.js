@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import BackButton from "./BackButton";
+import { Navigate } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
 import { User_Type } from "./Usser_Type";
@@ -63,6 +64,16 @@ function NewLogin({ setCurrentUser }) {
       console.log("not verified");
     }
   };
+
+  if (localStorage.getItem("CurrentUser")) {
+    const currentUser = localStorage.getItem("CurrentUser");
+    if (currentUser === "admin") {
+      return <Navigate to="/Warden" replace />;
+    } else if (currentUser === "student") {
+      return <Navigate to="/StudentPage" replace />;
+    }
+  }
+
 
   return (
     <>
