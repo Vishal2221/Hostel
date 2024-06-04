@@ -91,6 +91,35 @@ const Complaint = () => {
           </button>
         </form>
       </div>
+      <div className="py-5">
+        <h4 className="text-center ">Rules and Advice :</h4>
+        <ul className="list-disc mb-0">
+          <li className="mb-2">
+            <h6>Messages sent will be seen by the Warden</h6>
+          </li>
+          <li className="mb-2">
+            <h6>Don't send messages un-neccessary</h6>
+          </li>
+          <li className="mb-2">
+            <h6>Don't use abusive language</h6>
+          </li>
+          <li className="mb-2">
+            <h6>
+              It may take some time to review your concern so kindly be patient
+              and dont send multiple messages
+            </h6>
+          </li>
+          <li className="mb-2">
+            <h6>message should only contain relevent information</h6>
+          </li>
+          <li className="mb-2">
+            <h6>
+              If anyone found guilty of breaking the rules , action will be
+              taken against him accordingly
+            </h6>
+          </li>
+        </ul>
+      </div>
     </>
   );
 };

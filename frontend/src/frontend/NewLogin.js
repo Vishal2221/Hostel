@@ -20,11 +20,11 @@ function NewLogin({ setCurrentUser }) {
   };
 
   const proceedLogin = async () => {
-    console.log(username, password);
+    console.log(username, Userpassword);
 
     let result = await fetch("http://localhost:5800/login", {
       method: "post",
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, Userpassword }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -71,7 +71,6 @@ function NewLogin({ setCurrentUser }) {
       return <Navigate to="/StudentPage" replace />;
     }
   }
-
 
   return (
     <>
@@ -125,8 +124,8 @@ function NewLogin({ setCurrentUser }) {
                 <label>Password:</label>
                 <input
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={Userpassword}
+                  onChange={(e) => setUserPassword(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
                 <button
@@ -149,7 +148,7 @@ function NewLogin({ setCurrentUser }) {
                 <br />
                 <label>Password:</label>
                 <input
-                  type="text"
+                  type="password"
                   value={Userpassword}
                   onChange={(e) => setUserPassword(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"

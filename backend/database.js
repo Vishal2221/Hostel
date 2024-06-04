@@ -32,8 +32,8 @@ app.post("/register", async (req, resp) => {
 
 //login
 app.post("/login", async (req, resp) => {
-  if (req.body.password && req.body.username) {
-    let user = await User.findOne(req.body).select("-password");
+  if (req.body.Userpassword && req.body.username) {
+    let user = await User.findOne(req.body).select("-Userpassword");
     if (user) {
       resp.send(user);
     } else {
@@ -119,6 +119,30 @@ app.put("/users/:id/change-password", async (req, res) => {
   }
 });
 
+
+//////////change admin password
+app.put("/users/:id/change-ADMIN-password", async (req, res) => {
+  if (!req.body.newPassword) {
+    return res.status(400).send("newPassword is required.");
+  }
+
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).send("User not found.");
+    }
+
+    user.Userpassword = req.body.newPassword;
+    const result = await user.save();
+
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
 //send message
 
 app.put("/sendMessage/:id", async (req, res) => {
@@ -176,8 +200,8 @@ const storage = multer.diskStorage({
     cb(null, "../frontend/src/frontend/images/");
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, "MESSMENU" + uniqueSuffix + file.originalname);
+    const uniqueSuffix = Date.now().toString().slice(-6);
+    cb(null, "Notice" + uniqueSuffix + file.originalname);
   },
 });
 
