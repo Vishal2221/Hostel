@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
+require('dotenv').config()
+
+const DB = process.env.online_DATABASE
+
+
 mongoose.connect(
-  "mongodb+srv://dikshitdhar03:aaaaaaaa@test-pro-db.ottdv8d.mongodb.net/?retryWrites=true&w=majority&appName=test-pro-db"
+  DB
 );
 
-//"mongodb://localhost:27017"
-//  "mongodb+srv://dikshitdhar03:aaaaaaaa@test-pro-db.ottdv8d.mongodb.net/?retryWrites=true&w=majority&appName=test-pro-db"

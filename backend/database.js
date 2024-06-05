@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 require("./config");
+require('dotenv').config()
 const User = require("./users");
 const app = express();
+
 
 const mongoose = require("mongoose");
 app.use(express.json());
@@ -317,6 +319,10 @@ app.post("/upload/file", uploadFile.single("file"), async (req, res) => {
   }
 });
 
-app.listen(5800, () => {
+
+
+const PORT = process.env.PORT
+
+app.listen(PORT, () => {
   console.log("Server is running on port 5800");
 });

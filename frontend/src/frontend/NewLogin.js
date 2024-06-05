@@ -22,46 +22,118 @@ function NewLogin({ setCurrentUser }) {
   const proceedLogin = async () => {
     console.log(username, Userpassword);
 
-    let result = await fetch("http://localhost:5800/login", {
-      method: "post",
-      body: JSON.stringify({ username, Userpassword }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result = await result.json();
-    console.log(result);
-    if (result.username) {
-      localStorage.setItem("user", JSON.stringify(result));
-      setCurrentUser("admin");
-      navigate("/Warden");
-    } else {
-      navigate("/home");
-    }
-  };
+try {
+  const response = await fetch("http://localhost:5800/login", {
+    method: "POST",
+    body: JSON.stringify({ username,  Userpassword  }), // renamed Userpassword to password
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+
+  const result = await response.json();
+
+  if (result.username) {
+    localStorage.setItem("user", JSON.stringify(result));
+    setCurrentUser("admin");
+    navigate("/Warden");
+  } else {
+    navigate("/Home");
+  }
+} catch (error) {
+  console.error(error);
+  alert("please try again")
+  // handle error scenario, e.g. display error message to user
+
+//////////////////////////////////////
+
+ //   let result = await fetch("http://localhost:5800/login", {
+  //     method: "post",
+  //     body: JSON.stringify({ username, Userpassword }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+
+  //   result = await result.json();
+  //   console.log(result);
+  //   if (result.username) {
+  //     localStorage.setItem("user", JSON.stringify(result));
+  //     setCurrentUser("admin");
+  //     navigate("/Warden");
+  //   } else {
+  //     navigate("/Home");
+  //   }
+  // };
+
+
+}
+
+
+  }
+
+  // const userLogin = async () => {
+  //   console.log(Userpassword, RollNumber);
+  //   let result = await fetch("http://localhost:5800/verifyNumber", {
+  //     method: "post",
+  //     body: JSON.stringify({ RollNumber, Userpassword }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   result = await result.json();
+  //   console.log(result);
+  //   if (result.RollNumber) {
+  //     console.log("verified");
+  //     setCurrentUser("student");
+  //     localStorage.setItem("user", JSON.stringify(result));
+  //     navigate("/StudentPage");
+  //   } else {
+  //     //display an alert
+      
+  //     navigate("/Home");
+
+  //     console.log("not verified");
+  //   }
+  // };
+
 
   const userLogin = async () => {
-    console.log(Userpassword, RollNumber);
-    let result = await fetch("http://localhost:5800/verifyNumber", {
-      method: "post",
-      body: JSON.stringify({ RollNumber, Userpassword }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result = await result.json();
-    console.log(result);
-    if (result.RollNumber) {
-      console.log("verified");
-      setCurrentUser("student");
-      localStorage.setItem("user", JSON.stringify(result));
-      navigate("/StudentPage");
-    } else {
-      navigate("/NewLogin");
-
-      console.log("not verified");
+    try {
+      const response = await fetch("http://localhost:5800/verifyNumber", {
+        method: "POST",
+        body: JSON.stringify({ RollNumber, Userpassword }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const result = await response.json();
+  
+      if (result.RollNumber) {
+        console.log("Verified");
+        setCurrentUser("student");
+        localStorage.setItem("user", JSON.stringify(result));
+        navigate("/StudentPage");
+      } else {
+        console.error("Not verified");
+        alert("Invalid credentials"); // display an alert
+        navigate("/Home");
+      }
+    } catch (error) {
+      console.error("Error verifying user:", error);
+      alert("Please try again.");
     }
   };
+
+
+
+
+
 
   if (localStorage.getItem("CurrentUser")) {
     const currentUser = localStorage.getItem("CurrentUser");
