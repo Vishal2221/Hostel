@@ -22,59 +22,55 @@ function NewLogin({ setCurrentUser }) {
   const proceedLogin = async () => {
     console.log(username, Userpassword);
 
-try {
-  const response = await fetch("http://localhost:5800/login", {
-    method: "POST",
-    body: JSON.stringify({ username,  Userpassword  }), // renamed Userpassword to password
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+    try {
+      const response = await fetch("http://localhost:5800/login/admin", {
+        method: "POST",
+        body: JSON.stringify({ username, Userpassword }), // renamed Userpassword to password
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
 
-  const result = await response.json();
+      const result = await response.json();
 
-  if (result.username) {
-    localStorage.setItem("user", JSON.stringify(result));
-    setCurrentUser("admin");
-    navigate("/Warden");
-  } else {
-    navigate("/Home");
-  }
-} catch (error) {
-  console.error(error);
-  alert("please try again")
-  // handle error scenario, e.g. display error message to user
+      if (result.username) {
+        localStorage.setItem("user", JSON.stringify(result));
+        setCurrentUser("admin");
+        navigate("/Warden");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("please try again");
+      // handle error scenario, e.g. display error message to user
 
-//////////////////////////////////////
+      //////////////////////////////////////
 
- //   let result = await fetch("http://localhost:5800/login", {
-  //     method: "post",
-  //     body: JSON.stringify({ username, Userpassword }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
+      //   let result = await fetch("http://localhost:5800/login", {
+      //     method: "post",
+      //     body: JSON.stringify({ username, Userpassword }),
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   });
 
-  //   result = await result.json();
-  //   console.log(result);
-  //   if (result.username) {
-  //     localStorage.setItem("user", JSON.stringify(result));
-  //     setCurrentUser("admin");
-  //     navigate("/Warden");
-  //   } else {
-  //     navigate("/Home");
-  //   }
-  // };
-
-
-}
-
-
-  }
+      //   result = await result.json();
+      //   console.log(result);
+      //   if (result.username) {
+      //     localStorage.setItem("user", JSON.stringify(result));
+      //     setCurrentUser("admin");
+      //     navigate("/Warden");
+      //   } else {
+      //     navigate("/Home");
+      //   }
+      // };
+    }
+  };
 
   // const userLogin = async () => {
   //   console.log(Userpassword, RollNumber);
@@ -94,46 +90,40 @@ try {
   //     navigate("/StudentPage");
   //   } else {
   //     //display an alert
-      
+
   //     navigate("/Home");
 
   //     console.log("not verified");
   //   }
   // };
 
-
   const userLogin = async () => {
     try {
-      const response = await fetch("http://localhost:5800/verifyNumber", {
+      const response = await fetch("http://localhost:5800/login/student", {
         method: "POST",
         body: JSON.stringify({ RollNumber, Userpassword }),
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+
       const result = await response.json();
-  
-      if (result.RollNumber) {
+
+      if (result.message === "Authenticated") {
         console.log("Verified");
         setCurrentUser("student");
-        localStorage.setItem("user", JSON.stringify(result));
+        localStorage.setItem("user", JSON.stringify(result.student));
         navigate("/StudentPage");
       } else {
         console.error("Not verified");
         alert("Invalid credentials"); // display an alert
-        navigate("/Home");
+        navigate("/");
       }
     } catch (error) {
       console.error("Error verifying user:", error);
       alert("Please try again.");
     }
   };
-
-
-
-
-
 
   if (localStorage.getItem("CurrentUser")) {
     const currentUser = localStorage.getItem("CurrentUser");
@@ -189,6 +179,7 @@ try {
                 <input
                   type="text"
                   value={username}
+                  required
                   onChange={(e) => setUsername(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
@@ -197,6 +188,7 @@ try {
                 <input
                   type="password"
                   value={Userpassword}
+                  required
                   onChange={(e) => setUserPassword(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
@@ -214,6 +206,7 @@ try {
                 <input
                   type="text"
                   value={RollNumber}
+                  required
                   onChange={(e) => setRollNumber(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
@@ -222,6 +215,7 @@ try {
                 <input
                   type="password"
                   value={Userpassword}
+                  required
                   onChange={(e) => setUserPassword(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
