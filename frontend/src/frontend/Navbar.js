@@ -9,7 +9,7 @@ function Navbar() {
   const logout = () => {
     console.log("logout");
     localStorage.clear();
-    navigate("/Home");
+    navigate("/");
   };
 
   const [time, setTime] = useState(new Date());
@@ -40,8 +40,8 @@ function Navbar() {
 
         <div className="flex justify-center ">
           <ul className="flex space-x-5 text-lg font-sans">
-          <li>
-              <Link to="/Home"> Home</Link>
+            <li>
+              <Link to="/"> Home</Link>
             </li>
             <li>
               <Link to="https://www.gcetjammu.org.in/"> College</Link>
@@ -55,11 +55,11 @@ function Navbar() {
             </li>
             <li>
               {auth ? (
-                <Link to="/Home" onClick={logout}>
+                <Link to="/" onClick={logout}>
                   Log out
                 </Link>
               ) : (
-                <Link to="/NewLogin">Log in</Link>
+                <Link to="/Login">Log in</Link>
               )}
             </li>
           </ul>

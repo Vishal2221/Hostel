@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 require("./config");
-require('dotenv').config()
+require("dotenv").config();
 const User = require("./users");
 const app = express();
-
 
 const mongoose = require("mongoose");
 app.use(express.json());
@@ -16,24 +17,22 @@ app.post("/register", async (req, resp) => {
   const existingStudent = await User.findOne({
     RollNumber: req.body.RollNumber,
   });
-  let result;
   if (!existingStudent) {
     let user = new User(req.body);
-    user.Userpassword = req.body.Semester + "#" + req.body.RollNumber;
-    result = await user.save();
-  } else {
-    result = await User.findOneAndUpdate(
-      { RollNumber: req.body.RollNumber }, // search criteria
-      req.body, // new data
-      { upsert: true } // if the student doesn't exist, insert it
+    const hashedPassword = await bcrypt.hash(
+      req.body.Semester + "#" + req.body.RollNumber,
+      10
     );
+    user.Userpassword = hashedPassword;
+    let result = await user.save();
+    resp.send(result);
+  } else {
+    resp.status(400).send("Student Already Exists!!!");
   }
-
-  resp.send(result);
 });
 
 //login
-app.post("/login", async (req, resp) => {
+app.post("/login/admin", async (req, resp) => {
   if (req.body.Userpassword && req.body.username) {
     let user = await User.findOne(req.body).select("-Userpassword");
     if (user) {
@@ -47,16 +46,51 @@ app.post("/login", async (req, resp) => {
 });
 
 //verify phoneNumber
-app.post("/verifyNumber", async (req, resp) => {
-  if (req.body.RollNumber && req.body.Userpassword) {
-    let user = await User.findOne(req.body).select("-Userpassword");
-    if (user) {
-      resp.send(user);
-    } else {
-      resp.send("no user found");
-    }
-  } else {
-    resp.send("no user found");
+app.post("/login/student", async (req, resp) => {
+  let existingStudent = await User.findOne({ RollNumber: req.body.RollNumber });
+  if (!existingStudent) {
+    return resp.status(404).json({
+      message: "Student doesn't exist, Kindly enter correct roll number",
+    });
+  }
+
+  try {
+    bcrypt.compare(
+      req.body.Userpassword,
+      existingStudent.Userpassword,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return resp
+            .status(500)
+            .json({ message: "We are unable to log you in" });
+        }
+        if (!result) {
+          return resp
+            .status(401)
+            .json({ message: "Incorrect roll number or password" }); //un authorized
+        }
+
+        //jwt token generation
+        const token = jwt.sign(
+          { RollNumber: existingStudent.RollNumber },
+          process.env.jwt_key,
+          {
+            expiresIn: "5h",
+          }
+        );
+
+        resp.status(200).json({
+          userToken: token,
+          userID: existingStudent._id,
+          student: existingStudent,
+          message: "Authenticated",
+        });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    resp.send(500).json({ message: "We are unable to log you in." });
   }
 });
 
@@ -121,7 +155,6 @@ app.put("/users/:id/change-password", async (req, res) => {
   }
 });
 
-
 //////////change admin password
 app.put("/users/:id/change-ADMIN-password", async (req, res) => {
   if (!req.body.newPassword) {
@@ -143,7 +176,6 @@ app.put("/users/:id/change-ADMIN-password", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 
 //send message
 
@@ -282,6 +314,10 @@ app.post("/upload/file", uploadFile.single("file"), async (req, res) => {
     const data = XLSX.utils.sheet_to_json(sheet);
 
     for (let item of data) {
+      const hashedPassword = await bcrypt.hash(
+        item.Semester + "#" + item.Roll_No,
+        10
+      );
       const student = {
         Name: item.Name,
         Email: item.Email,
@@ -292,7 +328,7 @@ app.post("/upload/file", uploadFile.single("file"), async (req, res) => {
         Semester: item.Semester,
         Branch: item.Branch,
         Address: item.Address,
-        Userpassword: item.Semester + "#" + item.Roll_No,
+        Userpassword: hashedPassword,
       };
 
       // Check if a student with the same roll number already exists
@@ -319,9 +355,7 @@ app.post("/upload/file", uploadFile.single("file"), async (req, res) => {
   }
 });
 
-
-
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log("Server is running on port 5800");

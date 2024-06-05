@@ -17,7 +17,7 @@ function StudentPage() {
   const logout = () => {
     console.log("logout");
     localStorage.clear();
-    navigate("/Home");
+    navigate("/");
   };
   const [image, setImage] = useState(null);
 
@@ -122,7 +122,7 @@ function StudentPage() {
               </li>
               <li>
                 {auth ? (
-                  <Link to="/Home" onClick={logout}>
+                  <Link to="/" onClick={logout}>
                     Log out
                   </Link>
                 ) : (
@@ -178,7 +178,11 @@ function StudentPage() {
             allImage.map((data) => {
               return (
                 <div key={data._id}>
-                  <img className="rounded-2xl" src={require(`./images/${data.image}`)}></img>
+                  <img
+                    className="rounded-2xl"
+                    alt="images"
+                    src={require(`./images/${data.image}`)}
+                  ></img>
                 </div>
               );
             })}

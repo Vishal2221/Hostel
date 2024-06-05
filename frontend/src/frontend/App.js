@@ -67,16 +67,7 @@ function App() {
           ></Route>
 
           <Route
-            path="/home"
-            element={
-              <PublicElement>
-                <Home setCurrentUser={setCurrentUser} />
-              </PublicElement>
-            }
-          ></Route>
-
-          <Route
-            path="/NewLogin"
+            path="/Login"
             element={
               <PublicElement>
                 <NewLogin setCurrentUser={setAndStoreCurrentUser} />
