@@ -97,7 +97,7 @@ function StudentPage() {
 
   return (
     <div>
-      <div className="flex bg-blue-300 font-serif p-2 items-center justify-evenly m-0">
+      <div className="flex bg-gray-200 font-serif p-2 items-center justify-evenly m-0">
         <div className="logo ">
           <img
             className="float-left max-h-20"
@@ -178,7 +178,7 @@ function StudentPage() {
             allImage.map((data) => {
               return (
                 <div key={data._id}>
-                  <img src={require(`./images/${data.image}`)}></img>
+                  <img className="rounded-2xl" src={require(`./images/${data.image}`)}></img>
                 </div>
               );
             })}

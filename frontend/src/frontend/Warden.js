@@ -48,10 +48,12 @@ function Warden() {
   };
 
   return (
-    <>
+    <div className="" >
       <Navbar />
 
-      <div className="flex justify-between items-center py-2">
+      
+
+      <div className="flex justify-between items-center py-2 bg-gray-100 ">
         <h1 className="text-yellow-500 px-5">ADMIN ACCESS !!!</h1>
         
         <div className="mx-4 text-lg font-sans">
@@ -84,6 +86,7 @@ function Warden() {
           </div>
         )}
       </div>
+      <div >
 
       <div className="flex justify-evenly mt-20">
         <Link to="/Messages">
@@ -116,7 +119,8 @@ function Warden() {
         </Link>
         
       </div>
-    </>
+      </div>
+    </div>
   );
 }
 
