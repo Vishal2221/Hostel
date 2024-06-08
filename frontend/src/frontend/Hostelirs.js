@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Typography } from "@material-tailwind/react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import UploadButton from "./UploadButton";

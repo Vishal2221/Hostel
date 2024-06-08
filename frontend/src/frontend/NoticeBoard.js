@@ -6,6 +6,8 @@ import BackButton from "./BackButton";
 function NoticeBoard() {
   const [image, setImage] = useState(null);
   const [allImage, setAllImage] = useState(null);
+  const [imageUpload, setImageUpload] = useState(false);
+  const [imageDiv, setImageDiv] = useState(true);
 
   useEffect(() => {
     getImage();
@@ -17,21 +19,26 @@ function NoticeBoard() {
   }, []);
 
   const submitImage = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("image", image);
+    if (image) {
+      setImageUpload(true);
+      e.preventDefault();
+      try {
+        const formData = new FormData();
+        formData.append("image", image);
 
-      const result = await axios.post(
-        "http://localhost:5800/upload-image",
-        formData,
-        {
+        await axios.post("http://localhost:5800/upload-image", formData, {
           headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-    } catch (error) {
-      // Handle error during API call
-      console.error("Error uploading image:", error);
+        });
+        alert("Image uploaded successfully");
+        getImage();
+      } catch (error) {
+        // Handle error during API call
+        console.error("Error uploading image:", error);
+      }
+      setImageDiv(true);
+      setImageUpload(false);
+    } else {
+      alert("Please select an image");
     }
   };
 
@@ -51,13 +58,14 @@ function NoticeBoard() {
     }
   };
 
-  const deleteImage = async (id) => {
+  const deleteImage = async (id, fileId) => {
     try {
       const result = await axios.delete(
-        `http://localhost:5800/deleteImage/${id}`
+        `http://localhost:5800/deleteImage/${id}/${fileId}`
       );
       console.log(result);
       setAllImage(allImage.filter((image) => image._id !== id));
+      alert("Image deleted successfully");
     } catch (error) {
       console.log(error);
     }
@@ -69,41 +77,65 @@ function NoticeBoard() {
 
       <BackButton></BackButton>
       <div className="flex justify-center">
-        <form
-          onSubmit={submitImage}
-          className="bg-gray-300 py-2 px-4 rounded-2xl"
-        >
-          <input type="file" accept="image/*" onChange={onInputChange} />
+        {imageDiv ? (
           <button
-            className=" border-2 bg-gray-200 px-4 py-2 rounded-2xl  hover:bg-blue-400 hover:text-white "
-            type="submit"
+            type="button"
+            onClick={() => setImageDiv(false)}
+            className=" border-2 bg-blue-500 px-4 py-2 rounded-md  hover:bg-blue-400 text-white "
           >
-            Add
+            Upload an Image for the Notice Board
           </button>
-        </form>
+        ) : (
+          <form
+            onSubmit={submitImage}
+            className="bg-gray-300 py-2 px-4 rounded-2xl"
+          >
+            <input
+              className="m-2"
+              type="file"
+              accept="image/*"
+              onChange={onInputChange}
+            />
+            <button
+              className=" border-2 bg-blue-400 px-4 py-2 rounded-2xl  hover:bg-green-500 text-white "
+              type="submit"
+            >
+              {imageUpload ? "Uploading..." : "Upload Image"}
+            </button>
+          </form>
+        )}
       </div>
+      <hr />
       <div className="flex justify-center">
         <h1>NOTICE BOARD </h1>
       </div>
       <div className="container">
         <div className="mt-2">
-          {Array.isArray(allImage) &&
-            allImage.length > 0 &&
+          {Array.isArray(allImage) && allImage.length > 0 ? (
             allImage.map((data) => {
               return (
-                <div key={data._id} className="mt-1">
-                  <img src={require(`./images/${data.image}`)}></img>
+                <div
+                  key={data._id}
+                  className="m-4 flex flex-col items-center justify-center gap-3 border border-black p-3 rounded-2xl"
+                >
+                  <img
+                    src={"http://localhost:5800/image/" + data.image}
+                    alt={"notifications"}
+                  ></img>
                   <div className="flex justify-center">
                     <button
                       className="bg-gray-300 px-4 py-2 rounded-2xl  hover:bg-red-600 hover:text-white "
-                      onClick={() => deleteImage(data._id)}
+                      onClick={() => deleteImage(data._id, data.fileId)}
                     >
                       DELETE
                     </button>
                   </div>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <p className="text-center">No New Notifications found.</p>
+          )}
         </div>
         <div className="flex justify-center p-3"></div>
       </div>

@@ -6,16 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
 function Warden() {
   const auth = localStorage.getItem("user");
+  const navigate = useNavigate();
 
   const [newpassword, setnewPassword] = useState("");
   const [showPasswordDiv, setShowPasswordDiv] = useState(false);
 
   async function changeUserPassword(userId, newPassword) {
-    setShowPasswordDiv(!showPasswordDiv);
+    setShowPasswordDiv(false);
     try {
       const response = await fetch(
         `http://localhost:5800/users/${userId}/change-ADMIN-password`,
@@ -36,7 +37,8 @@ function Warden() {
       }
 
       const data = await response.json();
-      return data;
+      setnewPassword("");
+      alert(data.message);
     } catch (error) {
       console.error(error);
       throw error;
@@ -48,15 +50,21 @@ function Warden() {
   };
 
   return (
-    <div className="" >
+    <div className="">
       <Navbar />
-
-      
 
       <div className="flex justify-between items-center py-2 bg-gray-100 ">
         <h1 className="text-yellow-500 px-5">ADMIN ACCESS !!!</h1>
-        
-        <div className="mx-4 text-lg font-sans">
+
+        <div className="mx-4 text-lg font-sans flex gap-3">
+          <button
+            className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline-purple focus:outline-none text-white  py-2 px-3 rounded-2xl"
+            onClick={() => {
+              navigate("/AdminRegistration");
+            }}
+          >
+            Create New Admin User
+          </button>
           <button
             className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline-purple focus:outline-none text-white  py-2 px-3 rounded-2xl"
             onClick={showDIV}
@@ -69,7 +77,7 @@ function Warden() {
         {showPasswordDiv && (
           <div className="flex mx-4 flex-col">
             <input
-              type="text"
+              type="password"
               className="border-2 rounded"
               placeholder="enter new password"
               value={newpassword}
@@ -86,39 +94,39 @@ function Warden() {
           </div>
         )}
       </div>
-      <div >
+      <div>
+        <div className="flex justify-evenly mt-20">
+          <Link to="/Messages">
+            <div className=" flex flex-col items-center">
+              <div className="flex justify-center">
+                <FontAwesomeIcon icon={faBell} size="6x" />
+              </div>
+              <div className="flex justify-end items-end text-3xl">
+                Messages
+              </div>
+            </div>
+          </Link>
 
-      <div className="flex justify-evenly mt-20">
-        <Link to="/Messages">
-          <div className=" flex flex-col items-center">
-            <div className="flex justify-center">
-              <FontAwesomeIcon icon={faBell} size="6x" />
+          <Link to="/Hostelirs">
+            <div className=" flex flex-col items-center">
+              <div className="flex justify-center">
+                <FontAwesomeIcon icon={faUsers} size="6x" />
+              </div>
+              <div className="flex justify-end items-end text-3xl">
+                Hosteliers
+              </div>
             </div>
-            <div className="flex justify-end items-end text-3xl">Messages</div>
-          </div>
-        </Link>
+          </Link>
 
-        <Link to="/Hostelirs">
-          <div className=" flex flex-col items-center">
-            <div className="flex justify-center">
-              <FontAwesomeIcon icon={faUsers} size="6x" />
+          <Link to="/NoticeBoard">
+            <div className=" flex flex-col items-center">
+              <div className="flex justify-center">
+                <FontAwesomeIcon icon={faClipboard} size="6x" />
+              </div>
+              <div className="flex justify-end items-end text-3xl">NOTICE</div>
             </div>
-            <div className="flex justify-end items-end text-3xl">
-              Hosteliers
-            </div>
-          </div>
-        </Link>
-
-        <Link to="/NoticeBoard">
-          <div className=" flex flex-col items-center">
-            <div className="flex justify-center">
-              <FontAwesomeIcon icon={faClipboard} size="6x" />
-            </div>
-            <div className="flex justify-end items-end text-3xl">NOTICE</div>
-          </div>
-        </Link>
-        
-      </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
