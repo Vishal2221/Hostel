@@ -63,7 +63,7 @@ const Complaint = () => {
         <div className="float-right px-2 flex">
           <h4 className="mx-1">{JSON.parse(auth).Name}</h4>{" "}
           <h5 className="mx-1">
-            {JSON.parse(auth).roomNumber}-{JSON.parse(auth).Block}
+            {JSON.parse(auth).RoomNumber}-{JSON.parse(auth).Block}
           </h5>
         </div>
       </div>
