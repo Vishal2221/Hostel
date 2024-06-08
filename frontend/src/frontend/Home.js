@@ -2,11 +2,11 @@ import Navbar from "./Navbar";
 
 import image from "./images/hostel1.jpg";
 import image2 from "./images/Hostel2.jpeg";
-import image3 from "./images/Hostel3.jpeg"
-import image4 from "./images/Hostel4.jpeg"
-import image5 from "./images/Hostel5.jpeg"
-import image6 from "./images/Hostel6.jpeg"
-import image7 from "./images/Hostel7.jpeg"
+import image3 from "./images/Hostel3.jpeg";
+import image4 from "./images/Hostel4.jpeg";
+import image5 from "./images/Hostel5.jpeg";
+import image6 from "./images/Hostel6.jpeg";
+import image7 from "./images/Hostel7.jpeg";
 
 import React from "react";
 
@@ -48,8 +48,6 @@ function Home({ setCurrentUser }) {
         </div>
       </div>
 
-
-
       <div className="flex bg-gray-300 p-5 border">
         <div className=" p-4 bg-gray-200 rounded-3xl">
           <img
@@ -69,98 +67,67 @@ function Home({ setCurrentUser }) {
         </div>
       </div>
 
-
-
       <div className="flex bg-gray-300 p-5">
         <div className="p-5 m-auto bg-gray-200 rounded-xl">
           <p className="">
-            The hostel has a total of 150 rooms with a capacity of 200 students </p>
+            The hostel has a total of 150 rooms with a capacity of 200 students{" "}
+          </p>
           <p>
-            each room has a fan installed along with a tubelight and a charging port
+            each room has a fan installed along with a tubelight and a charging
+            port
           </p>
         </div>
         <div className=" p-4 bg-gray-200 rounded-3xl">
-          <img
-            className="rounded-2xl shadow w-96 h-78"
-            src={image3}
-          ></img>
+          <img className="rounded-2xl shadow w-96 h-78" src={image3}></img>
         </div>
       </div>
-
 
       <div className="flex bg-gray-300 p-5 border">
         <div className=" p-4 bg-gray-200 rounded-3xl">
-          <img
-            className="rounded-2xl shadow w-96"
-            src={image2}
-          ></img>
+          <img className="rounded-2xl shadow w-96" src={image2}></img>
         </div>
 
         <div className="p-5 m-auto bg-gray-200 rounded-xl">
           <p className="">
-            Hostel comes with ample parking space for vehicles both two wheelers and four wheelers
+            Hostel comes with ample parking space for vehicles both two wheelers
+            and four wheelers
           </p>
-          <p>
-           
-          </p>
+          <p></p>
         </div>
       </div>
 
       <div className="flex bg-gray-300 p-5">
         <div className="p-5 m-auto bg-gray-200 rounded-xl">
-          <p className="">
-            Hostel has two badminton courts one in each block
-          </p>
-          <p>
-            Recreation hall with indoor games facilities
-          </p>
-          <p>
-            Big  play ground for outdoor games like cricket and footbal
-          </p>
+          <p className="">Hostel has two badminton courts one in each block</p>
+          <p>Recreation hall with indoor games facilities</p>
+          <p>Big play ground for outdoor games like cricket and football</p>
         </div>
         <div className=" p-4 bg-gray-200 rounded-3xl">
-          <img
-            className="rounded-2xl shadow w-96"
-            src={image4}
-          ></img>
+          <img className="rounded-2xl shadow w-96" src={image4}></img>
         </div>
       </div>
 
       <div className="inline-flex">
-       <div className=" p-3">
-        <img className="w-102 h-96 border rounded-3xl" src={image2}> 
-        </img>
-
-       </div>
-       <div className=" p-3">
-        <img className="w-102 h-96 border rounded-3xl" src={image4}> 
-        </img>
-
-       </div>
-       <div className=" p-3">
-        <img className="w-102 h-96 border rounded-3xl" src={image5}> 
-        </img>
-
-       </div>
-
+        <div className=" p-3">
+          <img className="w-102 h-96 border rounded-3xl" src={image2}></img>
+        </div>
+        <div className=" p-3">
+          <img className="w-102 h-96 border rounded-3xl" src={image4}></img>
+        </div>
+        <div className=" p-3">
+          <img className="w-102 h-96 border rounded-3xl" src={image5}></img>
+        </div>
       </div>
       <div className="inline-flex">
-       <div className=" p-3">
-        <img className="w-102 h-96 border rounded-3xl" src={image6}> 
-        </img>
-
-       </div>
-       <div className=" p-3">
-        <img className="w-102 h-96 border rounded-3xl" src={image}> 
-        </img>
-
-       </div>
-       <div className=" p-3">
-        <img className="w-102 h-96 border rounded-3xl" src={image7}> 
-        </img>
-
-       </div>
-
+        <div className=" p-3">
+          <img className="w-102 h-96 border rounded-3xl" src={image6}></img>
+        </div>
+        <div className=" p-3">
+          <img className="w-102 h-96 border rounded-3xl" src={image}></img>
+        </div>
+        <div className=" p-3">
+          <img className="w-102 h-96 border rounded-3xl" src={image7}></img>
+        </div>
       </div>
     </>
   );

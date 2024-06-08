@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 require("./config");
 require("dotenv").config();
 const User = require("./users");
+const Admin = require("./admin");
 const app = express();
 
 const mongoose = require("mongoose");
@@ -31,17 +32,68 @@ app.post("/register", async (req, resp) => {
   }
 });
 
+app.post("/register/admin", async (req, resp) => {
+  // Check if a student with the same roll number already exists
+  const existingAdmin = await User.findOne({
+    Email: req.body.Email,
+  });
+  if (!existingAdmin) {
+    let user = new Admin(req.body);
+    const hashedPassword = await bcrypt.hash(req.body.Userpassword, 10);
+    user.Userpassword = hashedPassword;
+    let result = await user.save();
+    resp.send(result);
+  } else {
+    resp.status(400).send("Student Already Exists!!!");
+  }
+});
+
 //login
 app.post("/login/admin", async (req, resp) => {
-  if (req.body.Userpassword && req.body.username) {
-    let user = await User.findOne(req.body).select("-Userpassword");
-    if (user) {
-      resp.send(user);
-    } else {
-      resp.send("no user found");
-    }
-  } else {
-    resp.send("no user found");
+  let existingAdmin = await Admin.findOne({ Email: req.body.Email });
+  if (!existingAdmin) {
+    return resp.status(404).json({
+      message: "Admin doesn't exist, Kindly enter correct email",
+    });
+  }
+
+  try {
+    bcrypt.compare(
+      req.body.Userpassword,
+      existingAdmin.Userpassword,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return resp
+            .status(500)
+            .json({ message: "We are unable to log you in" });
+        }
+        if (!result) {
+          return resp
+            .status(401)
+            .json({ message: "Incorrect email or password" }); //un authorized
+        }
+
+        //jwt token generation
+        const token = jwt.sign(
+          { Email: existingAdmin.Email },
+          process.env.jwt_key,
+          {
+            expiresIn: "5h",
+          }
+        );
+
+        resp.status(200).json({
+          userToken: token,
+          userID: existingAdmin._id,
+          admin: existingAdmin,
+          message: "Authenticated",
+        });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    resp.send(500).json({ message: "We are unable to log you in." });
   }
 });
 
@@ -145,11 +197,11 @@ app.put("/users/:id/change-password", async (req, res) => {
     if (!user) {
       return res.status(404).send("User not found.");
     }
+    const hashedPassword = await bcrypt.hash(req.body.newPassword, 10);
+    user.Userpassword = hashedPassword;
+    await user.save();
 
-    user.Userpassword = req.body.newPassword;
-    const result = await user.save();
-
-    res.send(result);
+    res.send({ message: "password changed successfully" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -162,16 +214,17 @@ app.put("/users/:id/change-ADMIN-password", async (req, res) => {
   }
 
   try {
-    const user = await User.findById(req.params.id);
+    const admin = await Admin.findById(req.params.id);
 
-    if (!user) {
+    if (!admin) {
       return res.status(404).send("User not found.");
     }
 
-    user.Userpassword = req.body.newPassword;
-    const result = await user.save();
+    const hashedPassword = await bcrypt.hash(req.body.newPassword, 10);
+    admin.Userpassword = hashedPassword;
+    await admin.save();
 
-    res.send(result);
+    res.send({ message: "password changed successfully" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -228,25 +281,39 @@ app.get("/", async (req, res) => {
 //////////////////////////////////////////////////////////////
 
 const multer = require("multer");
+const Grid = require("gridfs-stream");
+const { GridFsStorage } = require("multer-gridfs-storage");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "../frontend/src/frontend/images/");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now().toString().slice(-6);
-    cb(null, "Notice" + uniqueSuffix + file.originalname);
+const conn = mongoose.createConnection(process.env.online_DATABASE);
+let gfs, gridfsBucket;
+
+conn.once("open", () => {
+  gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: "uploads",
+  });
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads"); // Set the collection name
+});
+
+// Set up GridFS storage
+const storage = new GridFsStorage({
+  url: process.env.online_DATABASE, // Database connection URL
+  file: (req, file) => {
+    return {
+      filename: `File_${file.originalname}`,
+      bucketName: "uploads", // Must match the collection name above
+    };
   },
 });
 
 const upload = multer({ storage: storage });
 
 app.post("/upload-image", upload.single("image"), async (req, res) => {
-  console.log(req.body);
   const imageName = req.file.filename;
-
+  // console.log(req.file);
   try {
-    await Images.create({ image: imageName });
+    const image = new Images({ image: imageName, fileId: req.file.id });
+    await image.save();
     res.json({ status: "ok" });
   } catch (error) {
     res.json({ status: error });
@@ -263,21 +330,26 @@ app.get("/get-image", async (req, res) => {
   }
 });
 
-const fs = require("fs");
+app.get("/image/:filename", async (req, res) => {
+  try {
+    const file = await gfs.files.findOne({ filename: req.params.filename });
+    const readStream = gridfsBucket.openDownloadStream(file._id);
+    readStream.pipe(res);
+  } catch (error) {
+    res.send("not found");
+  }
+});
 
-const path = require("path");
-
-app.delete("/deleteImage/:id", async (req, res) => {
+app.delete("/deleteImage/:id/:fileId", async (req, res) => {
   try {
     const image = await Images.findOne({ _id: req.params.id });
     if (image) {
-      const filePath = path.join(
-        __dirname,
-        "../frontend/src/frontend/images/",
-        image.image
-      );
-      fs.unlinkSync(filePath);
       const result = await Images.deleteOne({ _id: req.params.id });
+      // Delete the file from GridFS
+      gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: "uploads",
+      });
+      gridfsBucket.delete(new mongoose.Types.ObjectId(req.params.fileId));
       res.send(result);
     } else {
       res.status(404).send({ message: "Image not found" });

@@ -9,23 +9,19 @@ function NewLogin({ setCurrentUser }) {
   // Define the state variables for the form fields
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [Email, setEmail] = useState("");
   const [Userpassword, setUserPassword] = useState("");
   const [RollNumber, setRollNumber] = useState("");
   const [isAdmin, setIsAdmin] = useState(true);
 
-  const handleSubmit = (e) => {
+  const proceedLogin = async (e) => {
     e.preventDefault();
-  };
-
-  const proceedLogin = async () => {
-    console.log(username, Userpassword);
+    console.log(Email, Userpassword);
 
     try {
       const response = await fetch("http://localhost:5800/login/admin", {
         method: "POST",
-        body: JSON.stringify({ username, Userpassword }), // renamed Userpassword to password
+        body: JSON.stringify({ Email, Userpassword }), // renamed Userpassword to password
         headers: {
           "Content-Type": "application/json",
         },
@@ -37,67 +33,25 @@ function NewLogin({ setCurrentUser }) {
 
       const result = await response.json();
 
-      if (result.username) {
-        localStorage.setItem("user", JSON.stringify(result));
+      if (result.message === "Authenticated") {
+        localStorage.setItem("user", JSON.stringify(result.admin));
         setCurrentUser("admin");
         navigate("/Warden");
       } else {
+        console.error("Not verified");
+        alert("Invalid credentials"); // display an alert
         navigate("/");
       }
     } catch (error) {
       console.error(error);
       alert("please try again");
       // handle error scenario, e.g. display error message to user
-
-      //////////////////////////////////////
-
-      //   let result = await fetch("http://localhost:5800/login", {
-      //     method: "post",
-      //     body: JSON.stringify({ username, Userpassword }),
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
-
-      //   result = await result.json();
-      //   console.log(result);
-      //   if (result.username) {
-      //     localStorage.setItem("user", JSON.stringify(result));
-      //     setCurrentUser("admin");
-      //     navigate("/Warden");
-      //   } else {
-      //     navigate("/Home");
-      //   }
-      // };
     }
   };
 
-  // const userLogin = async () => {
-  //   console.log(Userpassword, RollNumber);
-  //   let result = await fetch("http://localhost:5800/verifyNumber", {
-  //     method: "post",
-  //     body: JSON.stringify({ RollNumber, Userpassword }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   result = await result.json();
-  //   console.log(result);
-  //   if (result.RollNumber) {
-  //     console.log("verified");
-  //     setCurrentUser("student");
-  //     localStorage.setItem("user", JSON.stringify(result));
-  //     navigate("/StudentPage");
-  //   } else {
-  //     //display an alert
-
-  //     navigate("/Home");
-
-  //     console.log("not verified");
-  //   }
-  // };
-
-  const userLogin = async () => {
+  const userLogin = async (e) => {
+    e.preventDefault();
+    console.log(Userpassword, RollNumber);
     try {
       const response = await fetch("http://localhost:5800/login/student", {
         method: "POST",
@@ -151,6 +105,7 @@ function NewLogin({ setCurrentUser }) {
                   id="admin"
                   name="role"
                   value="admin"
+                  defaultChecked={isAdmin}
                   onChange={() => setIsAdmin(true)}
                 />
                 <label htmlFor="admin" className="mr-2">
@@ -172,15 +127,15 @@ function NewLogin({ setCurrentUser }) {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={isAdmin ? proceedLogin : userLogin}>
             {isAdmin ? (
               <div>
-                <label>Username:</label>
+                <label>Email:</label>
                 <input
-                  type="text"
-                  value={username}
+                  type="email"
+                  value={Email}
                   required
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 />
                 <br />
