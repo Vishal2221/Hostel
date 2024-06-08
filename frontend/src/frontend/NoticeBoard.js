@@ -134,7 +134,7 @@ function NoticeBoard() {
               );
             })
           ) : (
-            <p className="text-center">No New Notifications found.</p>
+            <p className="text-center ">No New Notifications Uploaded.</p>
           )}
         </div>
         <div className="flex justify-center p-3"></div>

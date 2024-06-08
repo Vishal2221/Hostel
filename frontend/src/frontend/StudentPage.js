@@ -167,25 +167,31 @@ function StudentPage() {
         </div>
       </div>
 
-      <div className="flex container items-center h-screen  justify-evenly p-0">
-        <div className="container w-75 h-75 mt-0">
-          <div className="flex justify-center">
-            <h3 className="">NOTICE BOARD !!</h3>
+      <div className="flex container items-start min-h-screen  justify-evenly p-0 ">
+        <div className="container w-75 h-75 mt-4">
+          <div className="flex justify-center items-start">
+            <h1 className="text-red-500">NOTICE BOARD !!</h1>
           </div>
+          <hr />
 
-          {Array.isArray(allImage) &&
-            allImage.length > 0 &&
+          {Array.isArray(allImage) && allImage.length > 0 ? (
             allImage.map((data) => {
               return (
-                <div key={data._id}>
+                <div
+                  key={data._id}
+                  className="m-4 flex flex-col items-center justify-center gap-3 border border-black p-3 rounded-2xl"
+                >
                   <img
                     className="rounded-2xl"
                     alt="images"
-                    src={require(`./images/${data.image}`)}
+                    src={"http://localhost:5800/image/" + data.image}
                   ></img>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <p className="text-center m-3">No New Notifications Available.</p>
+          )}
         </div>
 
         {/* <Link to="/Complaint">
