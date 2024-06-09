@@ -52,7 +52,7 @@ const HostelStudents = () => {
       </div>
 
       <div className="flex justify-evenly">
-        <Card className="h-70 w-70 my-10 overflow-scroll">
+        <Card className="h-70 w-70 my-10 overflow-scroll bg-slate-100">
           <table className=" table-auto text-left">
             <thead>
               <tr>
@@ -111,7 +111,7 @@ const HostelStudents = () => {
               {Array.isArray(students) &&
                 students?.map((student) => (
                   <tr key={student._id}>
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -121,7 +121,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -131,7 +131,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -141,7 +141,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -151,7 +151,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
