@@ -63,6 +63,7 @@ function About() {
               </p> <p className="p-0 m-0">phonenumebr</p>
             </div>
           </div>
+          
           <div className="rounded-xl p-1 w-1/5" >
             <img className="rounded shadow" src={image6}></img>
             <div className="justify-center text-center">
