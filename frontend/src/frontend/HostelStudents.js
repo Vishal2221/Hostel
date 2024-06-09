@@ -52,7 +52,9 @@ const HostelStudents = () => {
       </div>
 
       <div className="flex justify-evenly">
+
         <Card className="h-70 w-70 my-10 overflow-scroll shadow bg-slate-100">
+
           <table className=" table-auto text-left">
             <thead>
               <tr>
