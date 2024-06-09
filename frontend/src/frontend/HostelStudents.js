@@ -52,15 +52,15 @@ const HostelStudents = () => {
       </div>
 
       <div className="flex justify-evenly">
-        <Card className="h-70 w-70 my-10 overflow-scroll">
+        <Card className="h-70 w-70 my-10 overflow-scroll shadow bg-slate-100">
           <table className=" table-auto text-left">
             <thead>
               <tr>
-                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 ">
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-normal leading-none  opacity-70"
                   >
                     Room
                   </Typography>
@@ -111,7 +111,7 @@ const HostelStudents = () => {
               {Array.isArray(students) &&
                 students?.map((student) => (
                   <tr key={student._id}>
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -121,7 +121,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -131,7 +131,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -141,7 +141,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -151,7 +151,7 @@ const HostelStudents = () => {
                       </Typography>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 border-b">
                       <Typography
                         variant="small"
                         color="blue-gray"
