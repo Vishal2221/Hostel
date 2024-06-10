@@ -8,6 +8,8 @@ import image1 from "./images/hostel1.jpg";
 import image7 from "./images/Hostel3.jpeg";
 import image8 from "./images/Hostel2.jpeg";
 import Navbar from "./Navbar"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react';
 
 function About() {
@@ -46,40 +48,45 @@ function About() {
         </div>
         <div className="flex justify-evenly">
           <div className="rounded-xl p-1 w-1/5" >
-            <img className="rounded shadow" src={image6}></img>
+            {/* <img className="rounded shadow" src={image6}></img> */}
+
             <div className="justify-center text-center">
-              <p className="p-0 m-0">loremipsun</p>
+            <FontAwesomeIcon icon={faUser}  size="4x"/>
+              <p className="pt-2 m-0">Dr. vikesh kumar</p>
               <p className="p-0 m-0">
-                designation
-              </p> <p className="p-0 m-0">phonenumebr</p>
+                Warden
+              </p> <p className="p-0 m-0">9697327153r</p>
             </div>
           </div>
           <div className="rounded-xl p-1 w-1/5" >
-            <img className="rounded shadow" src={image6}></img>
-            <div className="justify-center text-center">
-              <p className="p-0 m-0">loremipsun</p>
-              <p className="p-0 m-0">
-                designation
-              </p> <p className="p-0 m-0">phonenumebr</p>
-            </div>
-          </div>
           
-          <div className="rounded-xl p-1 w-1/5" >
-            <img className="rounded shadow" src={image6}></img>
             <div className="justify-center text-center">
-              <p className="p-0 m-0">loremipsun</p>
+            <FontAwesomeIcon icon={faUser}  size="4x"/>
+              <p className="pt-2 m-0"> Om Prakash Thakur</p>
+              <p className="p-0 m-0">
+                Asst. warden
+              </p> <p className="p-0 m-0">9906189933</p>
+            </div>
+          </div>
+
+          <div className="rounded-xl p-1 w-1/5" >
+           
+            <div className="justify-center text-center">
+            <FontAwesomeIcon icon={faUser}  size="4x"/>
+              <p className="pt-2 m-0">Ms . Harinder Dhingra</p>
               <p className="p-0 m-0">
                 designation
-              </p> <p className="p-0 m-0">phonenumebr</p>
+              </p> <p className="p-0 m-0">9419132700</p>
             </div>
           </div>
           <div className="rounded-xl p-1 w-1/5" >
-            <img className="rounded shadow" src={image6}></img>
+           
             <div className="justify-center text-center">
-              <p className="p-0 m-0">loremipsun</p>
+            <FontAwesomeIcon icon={faUser}  size="4x"/>
+              <p className="pt-2 m-0">Mr. Amit Pandoh</p>
               <p className="p-0 m-0">
                 designation
-              </p> <p className="p-0 m-0">phonenumebr</p>
+              </p> <p className="p-0 m-0">9419307651</p>
             </div>
           </div>
 
@@ -130,42 +137,6 @@ function About() {
       </div>
       </div>
 
-      <div>
-        <div className="text-center">
-          <p className="text-center text-4xl py-2">Alumni</p>
-
-        </div>
-        <div>
-          <div className="flex bg-gray-300 p-5">
-            <div className="p-5 m-auto bg-gray-200 rounded-xl">
-              <p className="">
-                The hostel has a total of 150 rooms with a capacity of 200 students{" "}
-              </p>
-              <p>
-                each room has a fan installed along with a tubelight and a charging
-                port
-              </p>
-            </div>
-            <div className=" p-4 bg-gray-200 rounded-3xl">
-              <img className="rounded-2xl shadow w-96 h-78" src={image3}></img>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div className="flex bg-gray-300 p-5 border">
-        <div className=" p-4 bg-gray-200 rounded-3xl">
-          <img className="rounded-2xl shadow w-96" src={image2}></img>
-        </div>
-
-        <div className="p-5 m-auto bg-gray-200 rounded-xl">
-          <p className="">
-            Hostel comes with ample parking space for vehicles both two wheelers
-            and four wheelers
-          </p>
-          <p></p>
-        </div>
-      </div>
 
 
 
