@@ -185,7 +185,7 @@ function Home({ setCurrentUser }) {
         </div>
       </div>
 
-      
+  
     </>
   );
 }
