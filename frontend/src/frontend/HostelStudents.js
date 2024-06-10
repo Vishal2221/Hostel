@@ -48,7 +48,7 @@ const HostelStudents = () => {
       </div>
 
 
-      <div className=" bg-slate-100 h-screen overflow-hidden">
+      <div className=" bg-slate-100  ">
       <BackButton />
       <div class="text-2xl font-bold text-center text-blue-500 mt-10 underline">
         Students residing in the Hostel
@@ -58,7 +58,7 @@ const HostelStudents = () => {
 
         <Card className="h-70 w-70 my-10 overflow-scroll shadow bg-slate-100">
 
-          <table className=" table-auto text-left">
+          <table className=" table-auto  text-left">
             <thead>
               <tr>
                 <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 ">
