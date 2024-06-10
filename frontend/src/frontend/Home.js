@@ -140,7 +140,7 @@ function Home({ setCurrentUser }) {
             easier for the hosteliers to reach the college
           </p>
           <p>
-            Hostel is within a distance of 500 meteres from the lecture halls{" "}
+            Hostel is within a distance of 300 meteres from the lecture halls{" "}
           </p>
         </div>
       </div>
