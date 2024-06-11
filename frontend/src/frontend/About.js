@@ -55,7 +55,7 @@ function About() {
               <p className="pt-2 m-0">Dr. vikesh kumar</p>
               <p className="p-0 m-0">
                 Warden
-              </p> <p className="p-0 m-0">9697327153r</p>
+              </p> <p className="p-0 m-0">9697327153</p>
             </div>
           </div>
           <div className="rounded-xl p-1 w-1/5" >
